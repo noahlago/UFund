@@ -7,6 +7,7 @@ An online U-Fund system built in Java 17=> and ___ _replace with other platform 
 
 - Jack McCarthy
 - Noah Lago
+- Michael Passucci
 - Swapnil Acharjee
 
 ## Prerequisites
