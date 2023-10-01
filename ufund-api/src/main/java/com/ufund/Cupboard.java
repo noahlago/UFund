@@ -8,8 +8,6 @@ package com.ufund;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +16,7 @@ public class Cupboard {
     private HashMap<String,Need> needs;
     private String orgName;
 
-    Cupboard(String orgName){
+    public Cupboard(String orgName){
         this.needs = new HashMap<>();
         this.orgName = orgName;
     }
@@ -86,7 +84,7 @@ public class Cupboard {
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
-    public ResponseEntity<> deleteNeed(String name) {
+    public ResponseEntity<Need> deleteNeed(String name) {
         if (!this.needs.containsKey(name)){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
