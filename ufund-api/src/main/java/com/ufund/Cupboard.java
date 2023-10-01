@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -86,7 +87,7 @@ public class Cupboard {
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
-    public ResponseEntity<> deleteNeed(String name) {
+    public ResponseEntity<Need> deleteNeed(String name) {
         if (!this.needs.containsKey(name)){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
@@ -94,5 +95,15 @@ public class Cupboard {
             this.needs.remove(name);
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    public ResponseEntity<Need> searchNeed(String search) {
+        Set<String> keys = this.needs.keySet();
+        for (String key: keys) {
+            if (key.contains(search)){
+                return new ResponseEntity<Need>(this.needs.get(key), HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 }
