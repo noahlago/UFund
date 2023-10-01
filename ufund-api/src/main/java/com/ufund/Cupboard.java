@@ -1,18 +1,17 @@
 package com.ufund;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Cupboard {
-    private List<Need> needs;
+    private HashMap<String,Need> needs;
     private String orgName;
 
     Cupboard(String orgName){
-        this.needs = new LinkedList<>();
+        this.needs = new HashMap<>();
         this.orgName = orgName;
     }
 
-    public List<Need> getNeeds(){
+    public HashMap<String,Need> getNeeds(){
         return this.needs;
     }
 
