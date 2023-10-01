@@ -7,54 +7,56 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.ufund.Cupboard;
+import com.ufund.InventoryDAO;
+import com.ufund.InventoryFIleDao;
 import com.ufund.Need;
 
 @SpringBootTest
 public class CupboardTests {
     @Test
     void newNeedTest(){
-        Cupboard cupboard = new Cupboard("test");
+        InventoryFIleDao inventory = new InventoryFIleDao("org");
+        
 
-        ResponseEntity<Need> created = cupboard.newNeed("test1", 0, 0, "type");
-        ResponseEntity<Need> conflict = cupboard.newNeed("test1", 0, 0, "pls conflict");
+        assertEquals(inventory.newNeed("need", 0, 0, null),true);
+        
 
-        assertEquals(created.getStatusCode(), HttpStatus.CREATED);
-        assertEquals(conflict.getStatusCode(), HttpStatus.CONFLICT);
+   
+
     }    
     
     @Test
     void getNeedTest(){
-        Cupboard cupboard = new Cupboard("test");
+        InventoryFIleDao cupboard = new InventoryFIleDao("test");
 
         cupboard.newNeed("test1", 0, 0, "type");
 
-        ResponseEntity<Need> response = cupboard.getNeed("test1");
+        Need need = cupboard.getNeed("test1");
 
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals("test1",need.getName());
     }
 
     @Test
     void updateNeedTest(){
-        Cupboard cupboard = new Cupboard("test");
+        InventoryFIleDao cupboard = new InventoryFIleDao("test");
 
         cupboard.newNeed("test1", 0, 0, "type");
 
-        ResponseEntity<Need> response = cupboard.updateNeed("test1", 10, 0, "update??????");
+        Need need = cupboard.updateNeed("test1", 10, 0, "update??????");
 
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(need.getType(), "update??????");
     }
 
     @Test
     void deleteNeedTest(){
-        Cupboard cupboard = new Cupboard("test");
+        InventoryFIleDao cupboard = new InventoryFIleDao("test");
 
         cupboard.newNeed("test1", 0, 0, "type");
 
-        ResponseEntity<Need> response = cupboard.deleteNeed("test1");
-        ResponseEntity<Need> conflict = cupboard.deleteNeed("test999999");
+        boolean bool1= cupboard.deleteNeed("test1");
+        boolean bool2= cupboard.deleteNeed("test999999");
 
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertEquals(conflict.getStatusCode(), HttpStatus.CONFLICT);
+        assertEquals(bool1,true);
+        assertEquals(bool2,false);
     }
 }

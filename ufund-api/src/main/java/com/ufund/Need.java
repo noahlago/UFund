@@ -10,6 +10,7 @@ public class Need {
     private String type;
 
     Need(String name, int cost, int quantity, String type){
+        this.name = name;
         this.cost = cost;
         this.quantity = quantity;
         this.type = type;

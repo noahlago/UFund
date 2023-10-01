@@ -8,18 +8,14 @@ package com.ufund;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-public class Cupboard {
+public class InventoryFIleDao implements InventoryDAO{
     private HashMap<String,Need> needs;
     private String orgName;
 
-    public Cupboard(String orgName){
+    public InventoryFIleDao(String orgName){
         this.needs = new HashMap<>();
         this.orgName = orgName;
     }
@@ -37,12 +33,12 @@ public class Cupboard {
      * If no such need exists, returns CONFLICT status
      * Else returns OK status
      */
-    public ResponseEntity<Need> getNeed(String name){
+    public Need getNeed(String name){
         if (this.needs.containsKey(name)){
-           return new ResponseEntity<Need>(this.needs.get(name),HttpStatus.OK);
+           return this.needs.get(name);
         }
         else{
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return null;
         }
     }
 
@@ -52,14 +48,14 @@ public class Cupboard {
      * Returns OK status if need with same name exists
      * Returns OK status otherwise
      */
-    public ResponseEntity<Need> updateNeed(String name,int cost, int quantity, String type){
+    public Need updateNeed(String name,int cost, int quantity, String type){
         if(this.needs.containsKey(name)){
             Need newNeed = new Need(name, cost, quantity, type);
             this.needs.put(name, newNeed);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return newNeed;
         }
         else{
-            return new ResponseEntity<Need>(HttpStatus.OK); 
+            return null; 
         }
     }
 
@@ -68,13 +64,13 @@ public class Cupboard {
      * Adds new need to cupboard HashMap
      * Returns CREATED status
      */
-    public ResponseEntity<Need> newNeed(String name, int cost, int quantity, String type){
+    public boolean newNeed(String name, int cost, int quantity, String type){
         if(needs.containsKey(name)){
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return false;
         }else{
             Need newNeed = new Need(name, cost, quantity, type);
             this.needs.put(name, newNeed);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return true;
         }
     }
 
@@ -82,28 +78,28 @@ public class Cupboard {
      * Grants the user access to all of the needs of the organization
      * returns OK status
      */
-    public ResponseEntity<Collection<Need>> getAllNeeds() {
+    public Collection<Need> getAllNeeds() {
         Collection<Need> all = this.needs.values();
-        return new ResponseEntity<>(all, HttpStatus.OK);
+        return all;
     }
 
-    public ResponseEntity<Need> deleteNeed(String name) {
+    public boolean deleteNeed(String name) {
         if (!this.needs.containsKey(name)){
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return false;
         }
         else {
             this.needs.remove(name);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return true;
         }
     }
 
-    public ResponseEntity<Need> searchNeed(String search) {
+    public Need searchNeed(String search) {
         Set<String> keys = this.needs.keySet();
         for (String key: keys) {
             if (key.contains(search)){
-                return new ResponseEntity<Need>(this.needs.get(key), HttpStatus.OK);
+                return this.needs.get(key);
             }
         }
-        return new ResponseEntity<>(HttpStatus.CONFLICT);
+        return null;
     }
 }
