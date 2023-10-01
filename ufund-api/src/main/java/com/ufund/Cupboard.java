@@ -6,7 +6,10 @@
 
 package com.ufund;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,5 +75,14 @@ public class Cupboard {
             this.needs.put(name, newNeed);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
+    }
+
+    /* 
+     * Grants the user access to all of the needs of the organization
+     * returns OK status
+     */
+    public ResponseEntity<Collection<Need>> getAllNeeds() {
+        Collection<Need> all = this.needs.values();
+        return new ResponseEntity<>(all, HttpStatus.OK);
     }
 }
