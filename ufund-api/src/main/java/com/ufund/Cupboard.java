@@ -85,4 +85,14 @@ public class Cupboard {
         Collection<Need> all = this.needs.values();
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
+
+    public ResponseEntity<> deleteNeed(String name) {
+        if (!this.needs.containsKey(name)){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        else {
+            this.needs.remove(name);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
 }
