@@ -1,5 +1,8 @@
 package com.ufund;
-
+/*
+ * A class used to represent a a single need of an organization
+ * @author SWEN 261 Section 3 Group 4
+ */
 public class Need {
     private String name;
     private int cost;
