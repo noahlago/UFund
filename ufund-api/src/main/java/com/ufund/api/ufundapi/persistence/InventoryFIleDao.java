@@ -97,6 +97,11 @@ public class InventoryFIleDao implements InventoryDAO{
         return all;
     }
 
+    /* 
+     * Deletes an existing need from the inventory
+     * On success returns OK
+     * On fail return CONFLICT    
+     */
     public boolean deleteNeed(String name) {
         if (!this.needs.containsKey(name)){
             return false;
@@ -107,6 +112,9 @@ public class InventoryFIleDao implements InventoryDAO{
         }
     }
 
+    /*
+     * Gets Collection of Needs that contain search value
+     */
     public Collection<Need> searchNeed(String search) {
         LinkedList<Need> needsList = new LinkedList<>();
         Set<String> keys = this.needs.keySet();
