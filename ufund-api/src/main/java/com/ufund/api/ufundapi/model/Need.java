@@ -11,12 +11,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Need {
     private static final Logger LOG = Logger.getLogger(Need.class.getName());
 
+    static final String STRING_FORMAT = "Need [name=%s, cost=%d, quantity= %d, type=%s]";
+
     @JsonProperty("name") private String name;
     @JsonProperty("cost") private int cost;
     @JsonProperty("quantity") private int quantity;
     @JsonProperty("type") private String type;
 
-    public Need(String name, int cost, int quantity, String type){
+    public Need(@JsonProperty("name") String name, @JsonProperty("cost") int cost, @JsonProperty("quantity")int quantity, @JsonProperty("type") String type){
         this.name = name;
         this.cost = cost;
         this.quantity = quantity;
@@ -25,8 +27,11 @@ public class Need {
 
     @Override
     public String toString() {
-        return name;
-    }    
+        return String.format(STRING_FORMAT,name,cost,quantity,type);
+    }   
+    
+
+
 
     public String getName() {
         return name;
@@ -40,6 +45,8 @@ public class Need {
     public String getType() {
         return type;
     }
+
+    
     
 
     

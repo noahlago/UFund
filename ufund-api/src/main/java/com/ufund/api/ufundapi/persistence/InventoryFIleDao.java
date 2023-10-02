@@ -78,13 +78,13 @@ public class InventoryFIleDao implements InventoryDAO{
      * Adds new need to cupboard HashMap
      * Returns CREATED status
      */
-    public boolean newNeed(String name, int cost, int quantity, String type){
-        if(needs.containsKey(name)){
-            return false;
+    public Need newNeed(Need need){
+        if(needs.containsKey(need.getName())){
+            return null;
         }else{
-            Need newNeed = new Need(name, cost, quantity, type);
-            this.needs.put(name, newNeed);
-            return true;
+            Need newNeed = new Need(need.getName(),need.getCost(),need.getQuantity(),need.getType());
+            this.needs.put(newNeed.getName(), newNeed);
+            return newNeed;
         }
     }
 

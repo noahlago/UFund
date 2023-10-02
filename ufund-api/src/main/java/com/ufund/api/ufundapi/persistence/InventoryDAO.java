@@ -12,7 +12,7 @@ public interface InventoryDAO {
 
     public Need updateNeed(String name,int cost, int quantity, String type) throws IOException;
 
-    public boolean newNeed(String name, int cost, int quantity, String type) throws IOException;
+    public Need newNeed(Need need) throws IOException;
 
     public Collection<Need> getAllNeeds() throws IOException;
 

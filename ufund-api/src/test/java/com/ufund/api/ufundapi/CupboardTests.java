@@ -18,9 +18,10 @@ public class CupboardTests {
     @Test
     void newNeedTest(){
         InventoryFIleDao inventory = new InventoryFIleDao("file",mapper);
+        Need need = new Need("need", 0, 0, null);
         
 
-        assertEquals(inventory.newNeed("need", 0, 0, null),true);
+        assertEquals(inventory.newNeed(need).getName(),need.getName());
         
     }    
     
@@ -28,29 +29,35 @@ public class CupboardTests {
     void getNeedTest(){
         InventoryFIleDao cupboard = new InventoryFIleDao("file",mapper);
 
-        cupboard.newNeed("test1", 0, 0, "type");
+        Need need = new Need("test1", 0, 0, null);
 
-        Need need = cupboard.getNeed("test1");
+        cupboard.newNeed(need);
 
-        assertEquals("test1",need.getName());
+        Need need2 = cupboard.getNeed("test1");
+
+        assertEquals("test1",need2.getName());
     }
 
     @Test
     void updateNeedTest(){
         InventoryFIleDao cupboard = new InventoryFIleDao("file",mapper);
 
-        cupboard.newNeed("test1", 0, 0, "type");
+        Need need = new Need("test1", 0, 0, null);
 
-        Need need = cupboard.updateNeed("test1", 10, 0, "update??????");
+        cupboard.newNeed(need);
 
-        assertEquals(need.getType(), "update??????");
+        Need need2 = cupboard.updateNeed("test1", 10, 0, "update??????");
+
+        assertEquals(need2.getType(), "update??????");
     }
 
     @Test
     void deleteNeedTest(){
         InventoryFIleDao cupboard = new InventoryFIleDao("file",mapper);
 
-        cupboard.newNeed("test1", 0, 0, "type");
+        Need need = new Need("test1", 0, 0, null);
+
+        cupboard.newNeed(need);
 
         boolean bool1= cupboard.deleteNeed("test1");
         boolean bool2= cupboard.deleteNeed("test999999");

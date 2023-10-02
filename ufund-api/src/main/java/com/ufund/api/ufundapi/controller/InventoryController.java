@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +37,24 @@ public class InventoryController {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
+        }
+    }
+
+    @PostMapping("")
+    public ResponseEntity<Need> createHero(@RequestBody Need need) {
+        LOG.info("POST /inventory " + need);
+
+        try{
+            Need newNeed = inventoryDAO.newNeed(need);
+            if (newNeed != null)
+                return new ResponseEntity<Need>(newNeed,HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+        catch(IOException e){
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
