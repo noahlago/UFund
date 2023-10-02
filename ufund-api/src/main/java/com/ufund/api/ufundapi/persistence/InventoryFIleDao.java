@@ -4,20 +4,34 @@
  * @author SWEN-261 Section 03 Team 4D
  */
 
-package com.ufund;
+package com.ufund.api.ufundapi.persistence;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ufund.api.ufundapi.model.Need;
+
+@Component
 public class InventoryFIleDao implements InventoryDAO{
+    private static final Logger LOG = Logger.getLogger(InventoryFIleDao.class.getName());
     private HashMap<String,Need> needs;
     private String orgName;
 
-    public InventoryFIleDao(String orgName){
+    private ObjectMapper objectMapper; 
+    private String filename; 
+
+
+    public InventoryFIleDao(@Value("${needs.file}") String filename, ObjectMapper objectMapper){
+        this.filename = filename;
         this.needs = new HashMap<>();
         this.orgName = orgName;
+        this.objectMapper = objectMapper;
     }
 
     public HashMap<String,Need> getNeeds(){

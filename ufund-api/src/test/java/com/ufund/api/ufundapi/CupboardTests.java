@@ -7,27 +7,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.ufund.InventoryDAO;
-import com.ufund.InventoryFIleDao;
-import com.ufund.Need;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ufund.api.ufundapi.model.Need;
+import com.ufund.api.ufundapi.persistence.InventoryDAO;
+import com.ufund.api.ufundapi.persistence.InventoryFIleDao;
 
 @SpringBootTest
 public class CupboardTests {
+    private ObjectMapper mapper = new ObjectMapper();
     @Test
     void newNeedTest(){
-        InventoryFIleDao inventory = new InventoryFIleDao("org");
+        InventoryFIleDao inventory = new InventoryFIleDao("file",mapper);
         
 
         assertEquals(inventory.newNeed("need", 0, 0, null),true);
         
-
-   
-
     }    
     
     @Test
     void getNeedTest(){
-        InventoryFIleDao cupboard = new InventoryFIleDao("test");
+        InventoryFIleDao cupboard = new InventoryFIleDao("file",mapper);
 
         cupboard.newNeed("test1", 0, 0, "type");
 
@@ -38,7 +37,7 @@ public class CupboardTests {
 
     @Test
     void updateNeedTest(){
-        InventoryFIleDao cupboard = new InventoryFIleDao("test");
+        InventoryFIleDao cupboard = new InventoryFIleDao("file",mapper);
 
         cupboard.newNeed("test1", 0, 0, "type");
 
@@ -49,7 +48,7 @@ public class CupboardTests {
 
     @Test
     void deleteNeedTest(){
-        InventoryFIleDao cupboard = new InventoryFIleDao("test");
+        InventoryFIleDao cupboard = new InventoryFIleDao("file",mapper);
 
         cupboard.newNeed("test1", 0, 0, "type");
 
