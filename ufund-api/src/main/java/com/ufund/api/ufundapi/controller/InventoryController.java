@@ -7,7 +7,9 @@ import java.util.logging.Logger;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ufund.api.ufundapi.model.Need;
 import com.ufund.api.ufundapi.persistence.InventoryDAO;
+import com.ufund.api.ufundapi.persistence.InventoryFIleDao;
 
 @RestController
 @RequestMapping("inventory")
@@ -56,5 +59,24 @@ public class InventoryController {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @DeleteMapping("/{name}")
+    public ResponseEntity<Need> deleteNeed(@PathVariable String name) {
+        LOG.info("DELETE /inventory/" + name);
+
+        try {
+            Need need = inventoryDAO.getNeed(name);
+            if(need != null){
+                inventoryDAO.deleteNeed(name);
+                return new ResponseEntity<Need>(need,HttpStatus.OK);
+            }else{                
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
