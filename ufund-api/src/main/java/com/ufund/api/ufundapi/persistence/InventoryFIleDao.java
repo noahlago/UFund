@@ -8,6 +8,7 @@ package com.ufund.api.ufundapi.persistence;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -62,11 +63,10 @@ public class InventoryFIleDao implements InventoryDAO{
      * Returns OK status if need with same name exists
      * Returns OK status otherwise
      */
-    public Need updateNeed(String name,int cost, int quantity, String type){
-        if(this.needs.containsKey(name)){
-            Need newNeed = new Need(name, cost, quantity, type);
-            this.needs.put(name, newNeed);
-            return newNeed;
+    public Need updateNeed(Need need){
+        if(this.needs.containsKey(need.getName())){
+            this.needs.put(need.getName(),need);
+            return need;
         }
         else{
             return null; 
@@ -107,13 +107,14 @@ public class InventoryFIleDao implements InventoryDAO{
         }
     }
 
-    public Need searchNeed(String search) {
+    public Collection<Need> searchNeed(String search) {
+        LinkedList<Need> needsList = new LinkedList<>();
         Set<String> keys = this.needs.keySet();
         for (String key: keys) {
             if (key.contains(search)){
-                return this.needs.get(key);
+                needsList.add(needs.get(key));
             }
         }
-        return null;
+        return needsList;
     }
 }

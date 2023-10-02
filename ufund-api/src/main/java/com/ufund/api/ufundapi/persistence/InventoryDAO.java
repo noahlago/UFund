@@ -10,7 +10,7 @@ public interface InventoryDAO {
 
     public Need getNeed(String name) throws IOException;
 
-    public Need updateNeed(String name,int cost, int quantity, String type) throws IOException;
+    public Need updateNeed(Need need) throws IOException;
 
     public Need newNeed(Need need) throws IOException;
 
@@ -18,7 +18,7 @@ public interface InventoryDAO {
 
     public boolean deleteNeed(String name) throws IOException;
 
-    public Need searchNeed(String search) throws IOException;
+    public Collection<Need> searchNeed(String search) throws IOException;
 
 
     

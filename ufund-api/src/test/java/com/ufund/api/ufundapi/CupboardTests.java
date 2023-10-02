@@ -46,7 +46,9 @@ public class CupboardTests {
 
         cupboard.newNeed(need);
 
-        Need need2 = cupboard.updateNeed("test1", 10, 0, "update??????");
+        Need newNeed = new Need("test1", 0, 0, "update??????");
+
+        Need need2 = cupboard.updateNeed(newNeed);
 
         assertEquals(need2.getType(), "update??????");
     }
