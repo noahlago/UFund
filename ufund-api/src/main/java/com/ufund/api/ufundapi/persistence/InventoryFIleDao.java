@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -20,19 +19,16 @@ import com.ufund.api.ufundapi.model.Need;
 
 @Component
 public class InventoryFIleDao implements InventoryDAO{
-    private static final Logger LOG = Logger.getLogger(InventoryFIleDao.class.getName());
     private HashMap<String,Need> needs;
     private String orgName;
+    private String filename;
 
-    private ObjectMapper objectMapper; 
-    private String filename; 
+
 
 
     public InventoryFIleDao(@Value("${needs.file}") String filename, ObjectMapper objectMapper){
         this.filename = filename;
         this.needs = new HashMap<>();
-        this.orgName = orgName;
-        this.objectMapper = objectMapper;
     }
 
     public HashMap<String,Need> getNeeds(){

@@ -1,6 +1,5 @@
 package com.ufund.api.ufundapi.model;
 
-import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author SWEN 261 Section 3 Group 4
  */
 public class Need {
-    private static final Logger LOG = Logger.getLogger(Need.class.getName());
 
     static final String STRING_FORMAT = "Need [name=%s, cost=%d, quantity= %d, type=%s]";
 
