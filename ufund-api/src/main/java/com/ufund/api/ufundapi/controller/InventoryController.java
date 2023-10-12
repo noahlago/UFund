@@ -27,7 +27,7 @@ public class InventoryController {
     private static final Logger LOG = Logger.getLogger(InventoryController.class.getName()); 
     private InventoryDAO inventoryDAO;
 
-    InventoryController(InventoryDAO inventoryDAO){
+    public InventoryController(InventoryDAO inventoryDAO){
         this.inventoryDAO = inventoryDAO;
     }
 

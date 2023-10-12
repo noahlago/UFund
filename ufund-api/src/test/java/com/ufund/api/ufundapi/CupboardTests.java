@@ -1,10 +1,12 @@
 package com.ufund.api.ufundapi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ufund.api.ufundapi.controller.InventoryController;
 import com.ufund.api.ufundapi.model.Need;
 import com.ufund.api.ufundapi.persistence.InventoryFIleDao;
 
@@ -62,5 +64,13 @@ public class CupboardTests {
 
         assertEquals(bool1,true);
         assertEquals(bool2,false);
+    }
+
+    @Test
+    void testController(){
+        InventoryFIleDao inventoryFIleDao = new InventoryFIleDao(null, mapper);
+        InventoryController controller = new InventoryController(inventoryFIleDao);
+        controller.createNeed(new Need("bob", 0, 0, "bill"));
+        assertNotNull(inventoryFIleDao.getNeeds());
     }
 }
