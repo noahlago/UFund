@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.model.Need;
 import com.ufund.api.ufundapi.persistence.InventoryFIleDao;
 
-public class JackIventoryFileDao {
+public class JackInventoryFileDao {
     ObjectMapper mapper = new ObjectMapper();
 
 
