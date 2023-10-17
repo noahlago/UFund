@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.controller.InventoryController;
 import com.ufund.api.ufundapi.model.Need;
-import com.ufund.api.ufundapi.persistence.InventoryFIleDao;
+import com.ufund.api.ufundapi.persistence.InventoryFileDAO;
 
 @SpringBootTest
 public class NoahCupboardControllerTests {
@@ -17,7 +17,7 @@ public class NoahCupboardControllerTests {
 
     @Test
     void successfulDeleteTest(){
-        InventoryFIleDao fileDAO = new InventoryFIleDao(null, mapper);
+        InventoryFileDAO fileDAO = new InventoryFileDAO(null, mapper);
         InventoryController controller = new InventoryController(fileDAO);
 
         controller.createNeed(new Need("new", 20, 2, "quality"));
@@ -27,7 +27,7 @@ public class NoahCupboardControllerTests {
 
     @Test
     void failedDeleteTest(){
-        InventoryFIleDao fileDAO = new InventoryFIleDao(null, mapper);
+        InventoryFileDAO fileDAO = new InventoryFileDAO(null, mapper);
         InventoryController controller = new InventoryController(fileDAO);
         
         controller.createNeed(new Need("new", 20, 2, "quality"));
@@ -37,7 +37,7 @@ public class NoahCupboardControllerTests {
 
     @Test
     void successfulGetTest(){
-        InventoryFIleDao fileDAO = new InventoryFIleDao(null, mapper);
+        InventoryFileDAO fileDAO = new InventoryFileDAO(null, mapper);
         InventoryController controller = new InventoryController(fileDAO);
         
         controller.createNeed(new Need("new", 20, 2, "quality"));
@@ -47,7 +47,7 @@ public class NoahCupboardControllerTests {
 
     @Test
     void failedGetTest(){
-        InventoryFIleDao fileDAO = new InventoryFIleDao(null, mapper);
+        InventoryFileDAO fileDAO = new InventoryFileDAO(null, mapper);
         InventoryController controller = new InventoryController(fileDAO);
         
         controller.createNeed(new Need("new", 20, 2, "quality"));

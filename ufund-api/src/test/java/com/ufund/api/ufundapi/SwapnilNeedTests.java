@@ -25,7 +25,14 @@ public class SwapnilNeedTests {
 	@Test
 	void equalsNotEquivalentTest() {
 		Need need1 = new Need("Fork", 1, 2, "Utensils");
-		Need need2 = new Need("Spoon", 1, 2, "Utensils");
+		Need need2 = new Need("Pan", 3, 4, "Cookware");
 		assertNotEquals(need1, need2);
+	}
+
+	@Test
+	void equalsNotEquivalentTypeTest() {
+		Need need = new Need("Fork", 1, 2, "Utensils");
+		Object obj = new Object();
+		assertNotEquals(need, obj);
 	}
 }

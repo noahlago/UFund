@@ -12,7 +12,7 @@ import java.util.Collection;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.controller.InventoryController;
 import com.ufund.api.ufundapi.model.Need;
-import com.ufund.api.ufundapi.persistence.InventoryFIleDao;
+import com.ufund.api.ufundapi.persistence.InventoryFileDAO;
 
 
 @SpringBootTest
@@ -24,12 +24,12 @@ public class SwapnilControllerTests {
 		new Need("tester", 9, 3, "quality"),	
 		new Need("unit", 15, 1, "base")
 	};
-	InventoryFIleDao fileDao;
+	InventoryFileDAO fileDao;
 	InventoryController controller;
 	
 	@BeforeEach
 	void setUp() {
-		fileDao = new InventoryFIleDao(null, mapper);
+		fileDao = new InventoryFileDAO(null, mapper);
 		controller = new InventoryController(fileDao);
 		for (Need need : needs) {
 			controller.createNeed(need);

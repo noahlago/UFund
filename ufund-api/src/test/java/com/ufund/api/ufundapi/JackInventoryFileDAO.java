@@ -7,15 +7,15 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.model.Need;
-import com.ufund.api.ufundapi.persistence.InventoryFIleDao;
+import com.ufund.api.ufundapi.persistence.InventoryFileDAO;
 
-public class JackIventoryFileDao {
+public class JackInventoryFileDAO {
     ObjectMapper mapper = new ObjectMapper();
 
 
     @Test
     void testDeletePresent(){
-        InventoryFIleDao cupboard = new InventoryFIleDao(null, mapper);
+        InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
         cupboard.newNeed(new Need("need1", 0, 0, "type1"));
 
         assertEquals(cupboard.deleteNeed("need1"), true);
@@ -23,7 +23,7 @@ public class JackIventoryFileDao {
 
     @Test
     void testDeleteNotPresent(){
-        InventoryFIleDao cupboard = new InventoryFIleDao(null, mapper);
+        InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
    
 
         assertEquals(cupboard.deleteNeed("need1"), false);
@@ -31,7 +31,7 @@ public class JackIventoryFileDao {
 
     @Test
     void testUpdateWorks(){
-        InventoryFIleDao cupboard = new InventoryFIleDao(null, mapper);
+        InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
 
         cupboard.newNeed(new Need("need1", 0, 0, "type1"));
 
@@ -45,7 +45,7 @@ public class JackIventoryFileDao {
 
     @Test
     void testUpdateNotPresent(){
-        InventoryFIleDao cupboard = new InventoryFIleDao(null, mapper);
+        InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
 
 
         Need testNeed = cupboard.updateNeed(new Need("need1", 2, 4, "type2"));
