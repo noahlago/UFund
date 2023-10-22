@@ -12,8 +12,29 @@ public class FundingBasket {
         this.needs = new HashMap<>();
     }
 
-    public void addNeed(Need need){
-        needs.put(need.getName(), need);
+    public boolean addNeed(Need need){
+        if(needs.containsKey(need.getName())){
+            return false;
+        }
+        else{
+            needs.put(need.getName(), need);
+            return true;
+        }
+    }
+
+    public boolean deleteNeed(Need need){
+        if(needs.containsKey(need.getName())){
+            needs.remove(need.getName());
+            return true;
+        }
+        else{
+            needs.put(need.getName(), need);
+            return false;
+        }
+    }
+
+    public HashMap<String,Need> getNeeds(){
+        return this.needs;
     }
 
 
