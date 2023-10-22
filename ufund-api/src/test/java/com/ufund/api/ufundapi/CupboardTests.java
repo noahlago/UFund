@@ -3,6 +3,8 @@ package com.ufund.api.ufundapi;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +16,7 @@ import com.ufund.api.ufundapi.persistence.InventoryFIleDao;
 public class CupboardTests {
     private ObjectMapper mapper = new ObjectMapper();
     @Test
-    void newNeedTest(){
+    void newNeedTest() throws IOException{
         InventoryFIleDao inventory = new InventoryFIleDao("file",mapper);
         Need need = new Need("need", 0, 0, null);
         
@@ -24,7 +26,7 @@ public class CupboardTests {
     }    
     
     @Test
-    void getNeedTest(){
+    void getNeedTest() throws IOException{
         InventoryFIleDao cupboard = new InventoryFIleDao("file",mapper);
 
         Need need = new Need("test1", 0, 0, null);
@@ -37,7 +39,7 @@ public class CupboardTests {
     }
 
     @Test
-    void updateNeedTest(){
+    void updateNeedTest() throws IOException{
         InventoryFIleDao cupboard = new InventoryFIleDao("file",mapper);
 
         Need need = new Need("test1", 0, 0, null);
@@ -52,7 +54,7 @@ public class CupboardTests {
     }
 
     @Test
-    void deleteNeedTest(){
+    void deleteNeedTest() throws IOException{
         InventoryFIleDao cupboard = new InventoryFIleDao("file",mapper);
 
         Need need = new Need("test1", 0, 0, null);
@@ -67,8 +69,8 @@ public class CupboardTests {
     }
 
     @Test
-    void testController(){
-        InventoryFIleDao inventoryFIleDao = new InventoryFIleDao(null, mapper);
+    void testController() throws IOException{
+        InventoryFIleDao inventoryFIleDao = new InventoryFIleDao(null,mapper);
         InventoryController controller = new InventoryController(inventoryFIleDao);
         controller.createNeed(new Need("bob", 0, 0, "bill"));
         assertNotNull(inventoryFIleDao.getNeeds());

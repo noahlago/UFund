@@ -6,6 +6,9 @@
 
 package com.ufund.api.ufundapi.persistence;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,6 +25,7 @@ public class InventoryFIleDao implements InventoryDAO{
     private HashMap<String,Need> needs;
     private String orgName;
     private String filename;
+    private ObjectMapper objectMapper;
 
 
 
@@ -29,6 +33,34 @@ public class InventoryFIleDao implements InventoryDAO{
     public InventoryFIleDao(@Value("${needs.file}") String filename, ObjectMapper objectMapper){
         this.filename = filename;
         this.needs = new HashMap<>();
+        this.objectMapper = objectMapper;
+    }
+
+    private boolean save() throws IOException {
+        if(filename == null){
+            return false;
+        }
+        Need[] needArray = getNeedsArray(null);
+
+        // Serializes the Java Objects to JSON objects into the file
+        // writeValue will thrown an IOException if there is an issue
+        // with the file or reading from the file
+        objectMapper.writeValue(new File(filename),needArray);
+        return true;
+    }
+
+    private Need[] getNeedsArray(String containsText) { // if containsText == null, no filter
+        ArrayList<Need> needArrayList = new ArrayList<>();
+
+        for (Need hero : needs.values()) {
+            if (containsText == null || hero.getName().contains(containsText)) {
+                needArrayList.add(hero);
+            }
+        }
+
+        Need[] needArray = new Need[needArrayList.size()];
+        needArrayList.toArray(needArray);
+        return needArray;
     }
 
     public HashMap<String,Need> getNeeds(){
@@ -59,9 +91,10 @@ public class InventoryFIleDao implements InventoryDAO{
      * Returns OK status if need with same name exists
      * Returns OK status otherwise
      */
-    public Need updateNeed(Need need){
+    public Need updateNeed(Need need) throws IOException{
         if(this.needs.containsKey(need.getName())){
             this.needs.put(need.getName(),need);
+            save();
             return need;
         }
         else{
@@ -74,12 +107,13 @@ public class InventoryFIleDao implements InventoryDAO{
      * Adds new need to cupboard HashMap
      * Returns CREATED status
      */
-    public Need newNeed(Need need){
+    public Need newNeed(Need need) throws IOException{
         if(needs.containsKey(need.getName())){
             return null;
         }else{
             Need newNeed = new Need(need.getName(),need.getCost(),need.getQuantity(),need.getType());
             this.needs.put(newNeed.getName(), newNeed);
+            save();
             return newNeed;
         }
     }
@@ -98,12 +132,13 @@ public class InventoryFIleDao implements InventoryDAO{
      * On success returns OK
      * On fail return CONFLICT    
      */
-    public boolean deleteNeed(String name) {
+    public boolean deleteNeed(String name) throws IOException{
         if (!this.needs.containsKey(name)){
             return false;
         }
         else {
             this.needs.remove(name);
+            save();
             return true;
         }
     }
