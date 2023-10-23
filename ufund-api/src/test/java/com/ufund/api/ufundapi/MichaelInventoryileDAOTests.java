@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +16,7 @@ public class MichaelInventoryileDAOTests {
     ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void testGetNeeds() {
+    public void testGetNeeds() throws IOException{
         InventoryFileDAO need = new InventoryFileDAO(null, mapper);
         Need need1 = new Need("car battery", 100, 1, "edible");
         Need need2 = new Need("peanut butter", 15, 3, "lubricant");
@@ -24,7 +26,7 @@ public class MichaelInventoryileDAOTests {
     }
 
     @Test
-    public void testNewNeed() {
+    public void testNewNeed() throws IOException{
         InventoryFileDAO dao = new InventoryFileDAO(null, mapper);
         Need need = new Need("like 100 rubber mallets", 1234, 100, "ammunition");
         Need addedNeed = dao.newNeed(need);
@@ -35,7 +37,7 @@ public class MichaelInventoryileDAOTests {
     }
 
         @Test
-        public void testDeleteNeed() {
+        public void testDeleteNeed() throws IOException{
         InventoryFileDAO need = new InventoryFileDAO(null, mapper);
         Need need1 = new Need("illegal pringles", 123456789, 1, "contraband");
         need.newNeed(need1);
@@ -44,7 +46,7 @@ public class MichaelInventoryileDAOTests {
     }
 
     @Test
-    public void testSearchNeed() {
+    public void testSearchNeed() throws IOException{
         InventoryFileDAO need = new InventoryFileDAO(null, mapper);
         Need need1 = new Need("a full sized freight train", 420, 1, "public transportation");
         Need need2 = new Need("a smaller than average freight train", 419, 1, "public transportation");
