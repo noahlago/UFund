@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.model.Need;
 
 @Component
-public class InventoryFIleDao implements InventoryDAO{
+public class InventoryFileDAO implements InventoryDAO{
     private HashMap<String,Need> needs;
     private String orgName;
     private String filename;
@@ -30,7 +30,7 @@ public class InventoryFIleDao implements InventoryDAO{
 
 
 
-    public InventoryFIleDao(@Value("${needs.file}") String filename, ObjectMapper objectMapper){
+    public InventoryFileDAO(@Value("${needs.file}") String filename, ObjectMapper objectMapper){
         this.filename = filename;
         this.needs = new HashMap<>();
         this.objectMapper = objectMapper;

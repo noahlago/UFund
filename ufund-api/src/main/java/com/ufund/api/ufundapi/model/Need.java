@@ -28,8 +28,18 @@ public class Need {
         return String.format(STRING_FORMAT,name,cost,quantity,type);
     }   
     
-
-
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Need)) {
+            return false;
+        } else {
+            Need other = (Need)obj;
+            return  this.name.equals(other.getName())
+                    && this.cost == other.getCost()
+                    && this.quantity == other.getQuantity()
+                    && this.type.equals(other.getType());
+        }
+    }
 
     public String getName() {
         return name;
@@ -43,10 +53,4 @@ public class Need {
     public String getType() {
         return type;
     }
-
-    
-    
-
-    
-
 }
