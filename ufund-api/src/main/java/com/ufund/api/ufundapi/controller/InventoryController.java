@@ -20,7 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ufund.api.ufundapi.model.Need;
 import com.ufund.api.ufundapi.persistence.InventoryDAO;
 
-
+/*
+ * This class acts as the REST API Controller for the InventoryFileDAO class. 
+ * Includes mapping for all necessary API calls, Get, Post, Put, and Delete.
+ * @author swen-261 Section 03 Team 4d
+ */
 @RestController
 @RequestMapping("inventory")
 public class InventoryController {
@@ -31,6 +35,9 @@ public class InventoryController {
         this.inventoryDAO = inventoryDAO;
     }
 
+    /*
+     * Gets all needs currently in the cupboard and returns as response entity with a Need Collection.
+     */
     @GetMapping("")
     public ResponseEntity<Collection<Need>> getNeed() {
         LOG.info("GET /inventory");
@@ -45,6 +52,10 @@ public class InventoryController {
         }
     }
 
+    /*
+     * Creates and adds a new need to the cupboard, as long as no need already exists with the same name. 
+     * If a new need is successfully created and added, that need is returned in the Response Entity, else returns null. 
+     */
     @PostMapping("")
     public ResponseEntity<Need> createNeed(@RequestBody Need need) {
         LOG.info("POST /inventory " + need);
@@ -63,6 +74,10 @@ public class InventoryController {
         }
     }
 
+    /*
+     * Deletes the need with the specified name from the Cupboard, as long as a need matching the given name exists. 
+     * If a matching need is successfully found and deleted, that need is returned, else null is returned. 
+     */
     @DeleteMapping("/{name}")
     public ResponseEntity<Need> deleteNeed(@PathVariable String name) {
         LOG.info("DELETE /inventory/" + name);
@@ -82,6 +97,10 @@ public class InventoryController {
 
     }
 
+    /*
+     * Gets the need from the Cupboard with the inputted name. 
+     * If a need is found with a matching name, it is returned as a Response Entity, otherwise null is returned. 
+     */
     @GetMapping("/{name}")
     public ResponseEntity<Need> getNeed(@PathVariable String name) {
         LOG.info("GET /inventory/" + name);
@@ -98,6 +117,10 @@ public class InventoryController {
         }
     }
 
+    /*
+     * Searches for needs with names that contain the given String value. 
+     * If any matching needs are found, a Collection of them is returned as a Response Entity, else null is returned. 
+     */
     @GetMapping("/")
     public ResponseEntity<Collection<Need>> searchNeeds(@RequestParam String name) {
         LOG.info("GET /inventory/?name="+name);
@@ -113,7 +136,10 @@ public class InventoryController {
         }
     }
 
-
+    /*
+     * Updates the specified need. Takes an already made need, and replaces the need currently in cupboard with the new, updated version. 
+     * If the need is successfully updated (a need with a matching name already existed), it is returned as a Response Entity, else null is returned. 
+     */
     @PutMapping("")
     public ResponseEntity<Need> updateNeed(@RequestBody Need need) {
         LOG.info("PUT /inventory " + need);
@@ -133,9 +159,4 @@ public class InventoryController {
 
     }
 
-
-
-
-
-    
 }
