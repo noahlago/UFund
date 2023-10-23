@@ -1,6 +1,14 @@
 <h2>Cupboard</h2>
 <ul class="cupboard">
   <li *ngFor="let need of cupboard">
-    <span class=need>{{need.name}}</span>
+    <button [class.selected]="need === selectedNeed" type="button" (click)="onSelect(need)">
+      <span class="badge">${{need.cost}}</span>
+      <span class="name">{{need.name}}</span>
+    </button>
+    <div *ngIf="selectedNeed">
+
+
+      <!-- Put admin check here -->
+    </div>
   </li>
 </ul>

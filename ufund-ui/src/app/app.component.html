@@ -1,2 +1,11 @@
-<h1>{{title}}</h1>
-<app-cupboard></app-cupboard>
+<nav>
+  <div class="left-nav">
+    <a routerLink="/login">Login</a>
+  </div>
+  <h2 routerLink="/">UFund</h2>
+  <div class="right-nav">
+    <a routerLink="/cupboard">Cupboard</a>
+    <a>Funding Basket</a>
+  </div>
+</nav>
+<router-outlet></router-outlet>

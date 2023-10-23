@@ -13,7 +13,7 @@ export class CupboardService {
   
   constructor(private http: HttpClient) {}
 
-  getCupboard(): Observable<Map<string, Need>> {
-    return this.http.get<Map<string, Need>>(this.cupboardUrl);
+  getCupboard(): Observable<Need[]> {
+    return this.http.get<Need[]>(this.cupboardUrl);
   }
 }

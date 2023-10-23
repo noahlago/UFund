@@ -12,6 +12,7 @@ export class CupboardComponent implements OnInit {
   constructor(private cupboardService: CupboardService) {}
 
   cupboard: Need[] = []; 
+  selectedNeed?: Need;
   
   ngOnInit(): void {
     this.getCupboard();
@@ -19,7 +20,11 @@ export class CupboardComponent implements OnInit {
 
   getCupboard(): void {
     this.cupboardService.getCupboard()
-        .subscribe(cupboard => this.cupboard = Array.from(cupboard.keys(), (key) => cupboard.get(key)) as Need[] );
+        .subscribe(cupboard => this.cupboard = cupboard);
+  }
+
+  onSelect(need: Need): void {
+    this.selectedNeed = need;
   }
 }
 
