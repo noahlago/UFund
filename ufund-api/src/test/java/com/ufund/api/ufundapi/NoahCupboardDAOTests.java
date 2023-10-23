@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,7 +18,7 @@ public class NoahCupboardDAOTests {
     private ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    void newSuccessTest(){
+    void newSuccessTest() throws IOException{
         InventoryFileDAO cupboard = new InventoryFileDAO("needs.json", mapper);
         Need newNeed = new Need("desperately needed", 999, 10, "good");
 
@@ -24,7 +26,7 @@ public class NoahCupboardDAOTests {
     }
 
     @Test
-    void newFailedTest(){
+    void newFailedTest() throws IOException{
         InventoryFileDAO cupboard = new InventoryFileDAO("needs.json", mapper);
         Need newNeed = new Need("desperately needed", 999, 10, "good");
 
@@ -33,14 +35,14 @@ public class NoahCupboardDAOTests {
     }
 
     @Test
-    void getAllEmptyTest(){
+    void getAllEmptyTest() throws IOException{
         InventoryFileDAO cupboard = new InventoryFileDAO("needs.json", mapper);
 
         assertEquals(cupboard.getAllNeeds().size(), 0);
     }
 
     @Test
-    void getAllOneTest(){
+    void getAllOneTest() throws IOException{
         InventoryFileDAO cupboard = new InventoryFileDAO("needs.json", mapper);
         Need need1 = new Need("desperately needed", 999, 10, "good");
         Need need2 = new Need("other", 50, 50, "miscellaneous");
