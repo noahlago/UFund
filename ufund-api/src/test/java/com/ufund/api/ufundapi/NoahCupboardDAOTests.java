@@ -19,7 +19,7 @@ public class NoahCupboardDAOTests {
 
     @Test
     void newSuccessTest() throws IOException{
-        InventoryFileDAO cupboard = new InventoryFileDAO("needs.json", mapper);
+        InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
         Need newNeed = new Need("desperately needed", 999, 10, "good");
 
         assertNotNull(cupboard.newNeed(newNeed));
@@ -27,7 +27,7 @@ public class NoahCupboardDAOTests {
 
     @Test
     void newFailedTest() throws IOException{
-        InventoryFileDAO cupboard = new InventoryFileDAO("needs.json", mapper);
+        InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
         Need newNeed = new Need("desperately needed", 999, 10, "good");
 
         cupboard.newNeed(newNeed);
@@ -36,14 +36,14 @@ public class NoahCupboardDAOTests {
 
     @Test
     void getAllEmptyTest() throws IOException{
-        InventoryFileDAO cupboard = new InventoryFileDAO("needs.json", mapper);
+        InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
 
         assertEquals(cupboard.getAllNeeds().size(), 0);
     }
 
     @Test
     void getAllOneTest() throws IOException{
-        InventoryFileDAO cupboard = new InventoryFileDAO("needs.json", mapper);
+        InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
         Need need1 = new Need("desperately needed", 999, 10, "good");
         Need need2 = new Need("other", 50, 50, "miscellaneous");
 

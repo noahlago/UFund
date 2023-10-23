@@ -23,6 +23,11 @@ public class FundingBasket {
         this.filename = filename;
         this.needs = new HashMap<>();
         this.objectMapper = objectMapper;
+
+        try{
+            load();
+        }
+        catch(IOException ioException){}
     }
 
     private boolean save() throws IOException {
@@ -31,11 +36,21 @@ public class FundingBasket {
         }
         Need[] needArray = getNeedsArray(null);
 
-        // Serializes the Java Objects to JSON objects into the file
-        // writeValue will thrown an IOException if there is an issue
-        // with the file or reading from the file
         objectMapper.writeValue(new File(filename),needArray);
         return true;
+    }
+
+    private void load() throws IOException{
+        if(filename == null){
+            return;
+        }
+
+        Need[] needArray = objectMapper.readValue(new File(filename),Need[].class);
+
+
+        for (Need need : needArray) {
+            needs.put(need.getName(), need);
+        }
     }
 
     private Need[] getNeedsArray(String containsText) { // if containsText == null, no filter
