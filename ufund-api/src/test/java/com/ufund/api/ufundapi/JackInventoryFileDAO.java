@@ -3,6 +3,8 @@ package com.ufund.api.ufundapi;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +16,7 @@ public class JackInventoryFileDAO {
 
 
     @Test
-    void testDeletePresent(){
+    void testDeletePresent() throws IOException{
         InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
         cupboard.newNeed(new Need("need1", 0, 0, "type1"));
 
@@ -22,7 +24,7 @@ public class JackInventoryFileDAO {
     }
 
     @Test
-    void testDeleteNotPresent(){
+    void testDeleteNotPresent() throws IOException{
         InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
    
 
@@ -30,7 +32,7 @@ public class JackInventoryFileDAO {
     }
 
     @Test
-    void testUpdateWorks(){
+    void testUpdateWorks() throws IOException{
         InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
 
         cupboard.newNeed(new Need("need1", 0, 0, "type1"));
@@ -44,7 +46,7 @@ public class JackInventoryFileDAO {
     }
 
     @Test
-    void testUpdateNotPresent(){
+    void testUpdateNotPresent() throws IOException{
         InventoryFileDAO cupboard = new InventoryFileDAO(null, mapper);
 
 
