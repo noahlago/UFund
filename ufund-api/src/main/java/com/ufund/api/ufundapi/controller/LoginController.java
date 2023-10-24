@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufund.api.ufundapi.model.LoginInfo;
 import com.ufund.api.ufundapi.persistence.Login;
 
 @RestController
@@ -24,11 +25,11 @@ public class LoginController {
     }
 
     @PostMapping("")
-    public ResponseEntity<String> login(@RequestBody String username, @RequestBody String password){
-        LOG.info("POST /login" + username + password);
+    public ResponseEntity<String> login(@RequestBody LoginInfo info){
+        LOG.info("POST /login" + info);
 
         try{
-            String token = login.login(username, password);
+            String token = login.login(info);
             return new ResponseEntity<String>(token, HttpStatus.OK);
         }catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());

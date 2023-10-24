@@ -7,19 +7,18 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ufund.api.ufundapi.model.LoginInfo;
 
 @Component
 public class Login {
-    static final String STRING_FORMAT = "Key [username=%s, token=%s]";
-    @JsonProperty("token") private String token;
+    private String token;
     private boolean isAdmin;
+    private String username;
     private String filename;
     private ObjectMapper objectMapper;
-    @JsonProperty("username") private String username;
 
-    public Login(@Value("&{basket.file}") String filename, ObjectMapper objectMapper){
+    public Login(@Value("${keys.file}") String filename, ObjectMapper objectMapper){
         this.filename = filename;
         this.token = null;
         this.username = null;
@@ -27,11 +26,13 @@ public class Login {
         this.objectMapper = objectMapper;
     }
 
-    private boolean save() throws IOException{
+    private boolean save(LoginInfo info) throws IOException{
+        LoginInfo[] data = new LoginInfo[1];
+        data[0] = info;
         if(filename == null){
             return false;
         }else{
-            objectMapper.writeValue(new File(filename), this);
+            objectMapper.writeValue(new File(filename), data);
             return true;
         }
     }
@@ -45,20 +46,21 @@ public class Login {
         }
     }
 
-    public String login(String username, String password) throws IOException{
+    public String login(LoginInfo info) throws IOException{
+        System.out.println("logging in");
+        this.username = info.getUsername();
         Random random = new Random();
-        this.username = username;
         if(username == "admin"){
             this.isAdmin = true;
         }
 
         for(int i = 0; i < 16; i++){
-            int randInt = random.nextInt(0,127);
+            int randInt = random.nextInt(1,127);
             char randChar = (char)(randInt);
             this.token += randChar;
         }
 
-        save();
+        save(info);
         return token;
     }
 
@@ -70,9 +72,7 @@ public class Login {
         return this.token != null;
     }
 
-    @Override
-    public String toString() {
-        return String.format(STRING_FORMAT, username, token);
-    }   
-
+    public String getUsername(){
+        return this.username;
+    }
 }
