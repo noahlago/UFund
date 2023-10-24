@@ -1,9 +1,11 @@
 <h2>Login</h2>
-<div class="login-box">
+<form class="login-box" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <label for="username">Username</label><br>
-  <input id="username" [(ngModel)]="username"><br>
+  <input id="username" type="text" formControlName="username"><br>
   <label for="password">Password</label><br>
-  <input id="password" [(ngModel)]="password"><br>
-  <button id="login" type="submit" (click)="login()">Login</button>
-
-</div>
+  <input id="password" type="text" formControlName="password"><br>
+  <div class="submit-box">
+    <button name="login" type="submit" (click)="onLoginClick()">Login</button>
+    <button name="register" type="submit" (click)="onRegisterClick()">Register</button>
+  </div>
+</form>

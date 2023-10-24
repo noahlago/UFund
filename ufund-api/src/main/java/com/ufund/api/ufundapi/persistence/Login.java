@@ -20,7 +20,7 @@ public class Login {
 
     public Login(@Value("${keys.file}") String filename, ObjectMapper objectMapper){
         this.filename = filename;
-        this.token = null;
+        this.token = "";
         this.username = null;
         this.isAdmin = false;
         this.objectMapper = objectMapper;
@@ -55,8 +55,9 @@ public class Login {
         }
 
         for(int i = 0; i < 16; i++){
-            int randInt = random.nextInt(1,127);
-            char randChar = (char)(randInt);
+            String alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789";
+            int randInt = random.nextInt(0, alphanumeric.length() - 1);
+            char randChar = alphanumeric.charAt(randInt);
             this.token += randChar;
         }
 

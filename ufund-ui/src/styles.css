@@ -19,8 +19,8 @@ h3 {
 
 input[type="text"],
 button {
-  color: #eee;
-  font-family: Cambria, Georgia, serif;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 button {
@@ -74,6 +74,7 @@ nav div {
   width: 20%
 }
 
+button,
 nav a {
   color: black;
   text-decoration-line: none;
@@ -83,6 +84,9 @@ nav a {
   margin: 2px;
 }
 
+.selected,
+button:hover,
+nav a:active,
 nav a:hover {
   cursor: pointer;
   color: white;
@@ -105,4 +109,11 @@ nav a.active {
   justify-content: right;
   text-align: right;
   padding-right: .5em;
+}
+
+.contents {
+  display: flex;
+  width: 70%;
+  flex-direction: horizontal;
+  justify-content: center;
 }

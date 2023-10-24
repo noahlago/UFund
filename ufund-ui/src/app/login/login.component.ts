@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -7,11 +8,43 @@ import { AuthService } from '../auth.service';
   styleUrls: [ './login.component.css', '../../styles.css' ]
 })
 export class LoginComponent {
-  
-  constructor(private authService: AuthService) {}
 
-  @Input() username?: string;
-  @Input() password?: string;
+  username?: string;
+  password?: string;
+  buttonType?: string;
+  loginForm = this.formBuilder.group({
+    username: '',
+    password: ''
+  });
+  
+  constructor(
+    private authService: AuthService, 
+    private formBuilder: FormBuilder) {}
+
+
+
+  onSubmit() {
+    this.username = this.loginForm.value.username!;
+    this.password = this.loginForm.value.password!;
+    
+    switch (this.buttonType) {
+      case "login": {
+        this.login();
+        break;
+      }
+      case "register": {
+        this.register();
+      }
+    }
+  }
+
+  onLoginClick() {
+    this.buttonType = "login";
+  }
+
+  onRegisterClick() {
+    this.buttonType = "register";
+  } 
 
   login() {
     return this.authService.login(this.username!, this.password!);
@@ -23,7 +56,5 @@ export class LoginComponent {
 
   register() {
     return this.authService.register(this.username!, this.password!);
-  }
-  
-  
+  }  
 }

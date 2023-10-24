@@ -1,1 +1,1 @@
-[{"name":"NeedOne","cost":1,"quantity":1,"type":"Expense"}]
+[{"name":"Knife","cost":3,"quantity":15,"type":"Utensil"},{"name":"Fork","cost":2,"quantity":12,"type":"Utensil"},{"name":"Spoon","cost":1,"quantity":20,"type":"Utensil"}]

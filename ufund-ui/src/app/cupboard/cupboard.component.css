@@ -1,65 +1,57 @@
+.item {
+  width: 6em;
+  margin: 10px;
+}
+
+.item button {
+  margin: 0;
+  padding-left: 0px;
+  width: inherit;
+}
+
+.selected {
+  width: inherit;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 .cupboard {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 15em;
-}
-
-.cupboard li {
-  display: inline-flex;
-}
-
-.cupboard button {
-  flex: 1;
-  cursor: pointer;
-  position: relative;
-  left: 0;
-  background-color: #EEE;
-  margin: .5em;
-  padding: 1em;
-  border-radius: 4px;
   display: flex;
-  align-items: stretch;
-  height: 1.8em;
+  direction: horizontal;
+  list-style-type: none;
+  justify-content: center;
 }
 
-.cupboard button:hover {
-  color: #2c3a41;
-  background-color: #e6e6e6;
-  left: .1em;
+.badge {
+  justify-self: left;
+  background-color: #B3A4DB;
+  margin-right: 5px;
+  padding: inherit;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: inherit;
 }
 
-.cupboard button:active {
-  background-color: #525252;
-  color: #fafafa;
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: inherit;
+  background-color: #8EBAC4;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
-.cupboard button.selected {
-  background-color: black;
-  color: white;
+.info p {
+  align-self: center;
+  margin: 0;
 }
 
-.cupboard button.selected:hover {
-  background-color: #505050;
-  color: white;
-}
-
-.cupboard button.selected:active {
-  background-color: black;
-  color: white;
-}
-
-.cupboard .cost {
-  display: inline-block;
+.basket {
+  margin: auto;
+  padding: 3px;
+  width: 70%;
   font-size: small;
-  color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color: #405061;
-  line-height: 1em;
-  margin-right: .8em;
-  border-radius: 4px 0 0 4px;
-}
-
-.cupboard .name {
   align-self: center;
 }
