@@ -41,9 +41,9 @@ public class FundingBasket {
     private Need[] getNeedsArray(String containsText) { // if containsText == null, no filter
         ArrayList<Need> needArrayList = new ArrayList<>();
 
-        for (Need hero : needs.values()) {
-            if (containsText == null || hero.getName().contains(containsText)) {
-                needArrayList.add(hero);
+        for (Need need : needs.values()) {
+            if (containsText == null || need.getName().contains(containsText)) {
+                needArrayList.add(need);
             }
         }
 

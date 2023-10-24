@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.model.Need;
 import com.ufund.api.ufundapi.persistence.InventoryFileDAO;
 
-public class MichaelInventoryileDAOTests {
+public class MichaelInventoryFIleDAOTests {
     ObjectMapper mapper = new ObjectMapper();
 
     @Test
