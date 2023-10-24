@@ -46,6 +46,14 @@ public class Login {
         return token;
     }
 
+    public void logout(String username) throws IOException{
+        this.loggedIn.remove(username);
+    }
+
+    public boolean authenticate(String username, String token){
+        return loggedIn.get(username).equals(token);
+    }
+
     public boolean isLoggedIn(String name){
         return loggedIn.containsKey(name);
     }
