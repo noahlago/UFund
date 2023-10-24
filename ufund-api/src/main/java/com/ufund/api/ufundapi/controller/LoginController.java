@@ -25,12 +25,12 @@ public class LoginController {
     }
 
     @PostMapping("")
-    public ResponseEntity<String> login(@RequestBody LoginInfo info){
+    public ResponseEntity<LoginInfo> login(@RequestBody LoginInfo info){
         LOG.info("POST /login" + info);
 
         try{
-            String token = login.login(info);
-            return new ResponseEntity<String>(token, HttpStatus.OK);
+            login.login(info);
+            return new ResponseEntity<LoginInfo>(info, HttpStatus.OK);
         }catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
