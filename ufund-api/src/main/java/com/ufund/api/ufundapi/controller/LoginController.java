@@ -30,8 +30,12 @@ public class LoginController {
         LOG.info("POST /auth/login" + info);
 
         try{
-            login.login(info);
-            return new ResponseEntity<LoginInfo>(info, HttpStatus.OK);
+            String token = login.login(info);
+            if(token.length() == 0){
+                return new ResponseEntity<LoginInfo>(info, HttpStatus.FORBIDDEN);
+            }else{
+                return new ResponseEntity<LoginInfo>(info, HttpStatus.OK);
+            }
         }catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
