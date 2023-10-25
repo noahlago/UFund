@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufund.api.ufundapi.model.Need;
@@ -76,7 +77,19 @@ public class FundingBasketController {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
 
+
+    @PostMapping("/checkout")
+    public ResponseEntity<String> checkout(){
+        try{
+            fundingBasket.checkout();
+            return new ResponseEntity<String>("checked out",HttpStatus.OK);
+        }
+        catch(IOException e){
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

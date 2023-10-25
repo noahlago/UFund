@@ -99,6 +99,11 @@ public class FundingBasket {
 
     }
 
+    public void checkout() throws IOException{
+        this.needs = new HashMap<>();
+        save();
+    }
+
 
 
 }
