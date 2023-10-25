@@ -36,7 +36,7 @@ public class Login {
 
         for(int i = 0; i < 16; i++){
             String alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789";
-            int randInt = random.nextInt(0, alphanumeric.length() - 1);
+            int randInt = random.nextInt(alphanumeric.length() - 1);
             char randChar = alphanumeric.charAt(randInt);
             token += randChar;
         }
