@@ -17,7 +17,7 @@ public class CupboardTests {
     private ObjectMapper mapper = new ObjectMapper();
     @Test
     void newNeedTest() throws IOException{
-        InventoryFileDAO inventory = new InventoryFileDAO("file",mapper);
+        InventoryFileDAO inventory = new InventoryFileDAO(null,mapper);
         Need need = new Need("need", 0, 0, null);
         
 
@@ -40,7 +40,7 @@ public class CupboardTests {
 
     @Test
     void updateNeedTest() throws IOException{
-        InventoryFileDAO cupboard = new InventoryFileDAO("file",mapper);
+        InventoryFileDAO cupboard = new InventoryFileDAO(null,mapper);
 
         Need need = new Need("test1", 0, 0, null);
 

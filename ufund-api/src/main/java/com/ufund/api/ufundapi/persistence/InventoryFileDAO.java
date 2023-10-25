@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,11 @@ public class InventoryFileDAO implements InventoryDAO{
         this.filename = filename;
         this.needs = new HashMap<>();
         this.objectMapper = objectMapper;
+        try{
+            load();
+        }
+        catch(IOException ioException){}
+        
     }
 
     private boolean save() throws IOException {
@@ -42,11 +48,21 @@ public class InventoryFileDAO implements InventoryDAO{
         }
         Need[] needArray = getNeedsArray(null);
 
-        // Serializes the Java Objects to JSON objects into the file
-        // writeValue will thrown an IOException if there is an issue
-        // with the file or reading from the file
         objectMapper.writeValue(new File(filename),needArray);
         return true;
+    }
+
+    private void load() throws IOException{
+        if(filename == null){
+            return;
+        }
+
+        Need[] needArray = objectMapper.readValue(new File(filename),Need[].class);
+
+
+        for (Need need : needArray) {
+            needs.put(need.getName(), need);
+        }
     }
 
     private Need[] getNeedsArray(String containsText) { // if containsText == null, no filter
