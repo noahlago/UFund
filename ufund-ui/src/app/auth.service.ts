@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-const authUrl = 'http://localhost:8080/login/';
+const authUrl = 'http://localhost:8080/auth/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -28,7 +28,7 @@ export class AuthService {
   
   login(username:string, password:string) { 
     console.log('POST login: ' + username + ', ' + password);
-    this.http.post<string>(authUrl, {username, password}, httpOptions)
+    this.http.post<string>(authUrl + 'login', {username, password}, httpOptions)
         .subscribe(token => this.token = token);
     
     console.log(this.token);

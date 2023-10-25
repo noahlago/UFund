@@ -16,7 +16,7 @@ import com.ufund.api.ufundapi.model.LoginInfo;
 import com.ufund.api.ufundapi.persistence.Login;
 
 @RestController
-@RequestMapping("login")
+@RequestMapping("/auth/")
 public class LoginController {
     private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
     private Login login;
@@ -25,9 +25,9 @@ public class LoginController {
         this.login = login;
     }
 
-    @PostMapping("")
+    @PostMapping("login")
     public ResponseEntity<LoginInfo> login(@RequestBody LoginInfo info){
-        LOG.info("POST /login" + info);
+        LOG.info("POST /auth/login" + info);
 
         try{
             login.login(info);
@@ -38,9 +38,9 @@ public class LoginController {
         }
     }
 
-    @PostMapping("")
+    @PostMapping("logout")
     public ResponseEntity<Object> logout(@RequestHeader(value="username") String username, @RequestHeader(value="token") String token){
-        LOG.info("POST /logout" + username + token);
+        LOG.info("POST /auth/logout" + username + token);
 
         try{
             login.logout(username);
