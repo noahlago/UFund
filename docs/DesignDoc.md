@@ -179,3 +179,5 @@ This section describes the web interface flow; this is how the user views and in
 
 >_**[Sprint 2 & 4]** **Include images of your code coverage report.** If there are any anomalies, discuss
 > those._
+
+![Code Coverage](coverage.png)
