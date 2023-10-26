@@ -93,9 +93,12 @@ public class FundingBasket {
     }
 
     public Need getNeed(String name,String username) throws IOException{
-        for(Need need : users.get(username)){
-            if(need.getName().equals(name)){
-                return need;
+        if(users.containsKey(username)){
+            for(Need need : users.get(username)){
+                if(need.getName().equals(name)){
+                    return need;
+                }
+                return null;
             }
         }
         return null;

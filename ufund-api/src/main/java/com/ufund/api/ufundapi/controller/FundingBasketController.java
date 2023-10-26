@@ -89,7 +89,7 @@ public class FundingBasketController {
         }
 
         try {
-            Need need = fundingBasket.getNeed(name,username);
+            Need need = fundingBasket.getNeed(name, username);
             if(need != null){
                 fundingBasket.deleteNeed(need,username);
                 return new ResponseEntity<Need>(need,HttpStatus.OK);
