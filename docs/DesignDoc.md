@@ -18,11 +18,14 @@ geometry: margin=1in
 
 ## Executive Summary
 
-> The goal of this project is to create an online U-Fund Manager where a company's Needs are stored and users can fund those needs. 
+* The goal of this project is to create an online U-Fund Manager where a company's Needs are stored and users can fund those needs. 
 
 ### Purpose
 >  _**[Sprint 2 & 4]** Provide a very brief statement about the project and the most
 > important user group and user goals._
+
+* Helper: the goal of a helper is to add needs from the cupboard to their funding basket and then proceed to checkout
+* Manager: the goal of the manager is to maintain the cupboard, including removing, adding, and editing needs.
 
 ### Glossary and Acronyms
 > _**[Sprint 2 & 4]** Provide a table of terms and acronyms._
@@ -30,6 +33,7 @@ geometry: margin=1in
 | Term | Definition |
 |------|------------|
 | SPA | Single Page |
+
 
 
 ## Requirements
@@ -43,6 +47,9 @@ This section describes the features of the application.
 ### Definition of MVP
 > _**[Sprint 2 & 4]** Provide a simple description of the Minimum Viable Product._
 
+
+* the MVP of thus project is a UI that can allow both Helpers and Managers complete their tasks
+
 ### MVP Features
 >  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
 
@@ -54,11 +61,15 @@ This section describes the features of the application.
 
 This section describes the application domain.
 
-![Domain Model](domain-model-placeholder.png)
+![Domain Model](UfundDomainModel.png)
 
 > _**[Sprint 2 & 4]** Provide a high-level overview of the domain for this application. You
 > can discuss the more important domain entities and their relationship
 > to each other._
+
+* The the Need and LoginInfo are used to send information to their respective FileDaos
+* Those FileDaos (FundingBasket, Inventory, and Login), then use that information to modify json objects and write to a file
+* The three controller classes convert HTTP requests into formats that the FileDaos can understand
 
 
 ## Architecture and Design
@@ -130,6 +141,16 @@ This section describes the web interface flow; this is how the user views and in
 > _**[Sprint 2, 3 & 4]** Will eventually address upto **4 key OO Principles** in your final design. Follow guidance in augmenting those completed in previous Sprints as indicated to you by instructor. Be sure to include any diagrams (or clearly refer to ones elsewhere in your Tier sections above) to support your claims._
 
 > _**[Sprint 3 & 4]** OO Design Principles should span across **all tiers.**_
+
+## Principle 1: Controller
+
+* Our project features three controllers that are all used to link the our Sping API and out Angualar UI. Each controller is capable of processing requests from the Angualr UI and calling the correct function in the api tier.
+
+## Principle 2: Single Responsibility
+
+* Each of our classes is only responsible for a specific task. For example our LoginContoller is only responsible for managing Login related requests while our FundingBasketController is only responsible for Funding Basket tasks instead of combining these two responsibilities into one giant Controller class.   
+
+*
 
 ## Static Code Analysis/Future Design Improvements
 > _**[Sprint 4]** With the results from the Static Code Analysis exercise, 
