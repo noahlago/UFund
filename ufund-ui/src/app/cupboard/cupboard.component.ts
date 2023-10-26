@@ -88,7 +88,7 @@ export class CupboardComponent implements OnInit {
   }
 
   addToBasket(): void {
-    this.fundingBasketService.createNeed(this.selectedNeed!);
+    this.fundingBasketService.createNeed(this.selectedNeed!).subscribe();
   }
 
 }

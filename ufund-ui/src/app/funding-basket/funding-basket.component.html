@@ -1,1 +1,18 @@
-<p>funding-basket works!</p>
+<h2>Funding Basket</h2>
+<div class="fullbox">
+  <ul class="basket">
+    <li class="item" *ngFor="let need of basket">
+      <button [class.selected]="need === selectedNeed" (click)="onSelect(need)">
+        <span class="badge">${{need.cost}}</span>
+        <span class="name">{{need.name}}</span>
+      </button>
+      <div class="info" *ngIf="need === selectedNeed">
+        <p>Type: {{need.type}}</p>
+        <p>Quantity: {{need.quantity}}</p>
+        <button class="remove" (click)="deleteNeed()">
+          Remove from Basket
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
