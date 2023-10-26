@@ -10,4 +10,10 @@ class UfundApiApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void testMain() {
+		String[] args = {};
+		UfundApiApplication.main(args);
+	}
+	
 }

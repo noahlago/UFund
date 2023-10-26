@@ -91,7 +91,7 @@ public class InventoryFileDAO implements InventoryDAO{
      * If no such need exists, returns CONFLICT status
      * Else returns OK status
      */
-    public Need getNeed(String name){
+    public Need getNeed(String name) throws IOException{
         if (this.needs.containsKey(name)){
            return this.needs.get(name);
         }
@@ -137,7 +137,7 @@ public class InventoryFileDAO implements InventoryDAO{
      * Grants the user access to all of the needs of the organization
      * returns OK status
      */
-    public Collection<Need> getAllNeeds() {
+    public Collection<Need> getAllNeeds() throws IOException {
         Collection<Need> all = this.needs.values();
         return all;
     }
@@ -161,7 +161,7 @@ public class InventoryFileDAO implements InventoryDAO{
     /*
      * Gets Collection of Needs that contain search value
      */
-    public Collection<Need> searchNeed(String search) {
+    public Collection<Need> searchNeed(String search) throws IOException {
         LinkedList<Need> needsList = new LinkedList<>();
         Set<String> keys = this.needs.keySet();
         for (String key: keys) {
