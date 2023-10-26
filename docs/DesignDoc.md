@@ -9,16 +9,16 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Team Fore
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Jack McCarthy
+  * Noah Lago
+  * Swapnil Acharjee
+  * Michael Passucci
 
 ## Executive Summary
 
-This is a summary of the project.
+> The goal of this project is to create an online U-Fund Manager where a company's Needs are stored and users can fund those needs. 
 
 ### Purpose
 >  _**[Sprint 2 & 4]** Provide a very brief statement about the project and the most
