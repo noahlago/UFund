@@ -48,7 +48,7 @@ This section describes the features of the application.
 > _**[Sprint 2 & 4]** Provide a simple description of the Minimum Viable Product._
 
 
-* the MVP of thus project is a UI that can allow both Helpers and Managers complete their tasks
+* The MVP of this project is a UI that can allow both Helpers and Managers complete their tasks
 
 ### MVP Features
 >  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
@@ -67,7 +67,7 @@ This section describes the application domain.
 > can discuss the more important domain entities and their relationship
 > to each other._
 
-* The the Need and LoginInfo are used to send information to their respective FileDaos
+* The Need and LoginInfo classes are used to send information to their respective FileDaos
 * Those FileDaos (FundingBasket, Inventory, and Login), then use that information to modify json objects and write to a file
 * The three controller classes convert HTTP requests into formats that the FileDaos can understand
 
@@ -150,7 +150,7 @@ This section describes the web interface flow; this is how the user views and in
 
 * Each of our classes is only responsible for a specific task. For example our LoginContoller is only responsible for managing Login related requests while our FundingBasketController is only responsible for Funding Basket tasks instead of combining these two responsibilities into one giant Controller class.   
 
-*
+
 
 ## Static Code Analysis/Future Design Improvements
 > _**[Sprint 4]** With the results from the Static Code Analysis exercise, 

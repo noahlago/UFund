@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufund.api.ufundapi.AuthUtils;
 import com.ufund.api.ufundapi.model.LoginInfo;
 import com.ufund.api.ufundapi.persistence.Login;
 
@@ -46,9 +47,17 @@ public class LoginController {
     public ResponseEntity<Object> logout(@RequestHeader(value="username") String username, @RequestHeader(value="token") String token){
         LOG.info("POST /auth/logout" + username + token);
 
+        if(AuthUtils.isLoggedIn(token) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         try{
-            login.logout(username);
-            return new ResponseEntity<>(HttpStatus.OK);
+            boolean result = login.logout(username);
+            if(result == true){
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         }catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

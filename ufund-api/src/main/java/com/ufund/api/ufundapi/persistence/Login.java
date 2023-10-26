@@ -65,8 +65,15 @@ public class Login {
         return token;
     }
 
-    public void logout(String username) throws IOException{
-        this.loggedIn.remove(username);
+    public boolean logout(String username) throws IOException{
+        if(loggedIn.containsKey(username)){
+            this.loggedIn.remove(username);
+            return true;
+        }
+        else{
+            return false;
+        }
+        
     }
 
     public boolean authenticate(String username, String token){
