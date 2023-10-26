@@ -1,3 +1,9 @@
+.fullbox {
+  display: flex;
+  flex-direction: row;
+  place-content: center;
+}
+
 .item {
   width: 6em;
   margin: 10px;
@@ -20,6 +26,8 @@
   direction: horizontal;
   list-style-type: none;
   justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
 }
 
 .badge {
@@ -54,4 +62,14 @@
   width: 70%;
   font-size: small;
   align-self: center;
+}
+
+.create-box,
+.edit-box {
+  margin: 3px;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  background-color: #8EBAC4;
 }

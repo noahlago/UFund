@@ -13,7 +13,7 @@ export class FundingBasketService {
   
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  options = this.auth.getOptions();
+  options = this.auth.genHeaders();
   
   getNeeds(): Observable<Need[]> {
     console.log('GET needs')

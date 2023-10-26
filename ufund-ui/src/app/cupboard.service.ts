@@ -15,7 +15,7 @@ export class CupboardService {
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   admin = this.auth.adminCheck();
-  options = this.auth.getOptions();
+  options = this.auth.genHeaders();
 
   getNeeds(): Observable<Need[]> {
     console.log('GET needs')
@@ -43,7 +43,7 @@ export class CupboardService {
   }
 
   updateNeed(need: Need): Observable<Need> {
-    console.log('UPDATE ' + need.name);
+    console.log('PUT ' + need.name);
     return this.http.put<Need>(this.cupboardUrl, need, this.options);
   }
   

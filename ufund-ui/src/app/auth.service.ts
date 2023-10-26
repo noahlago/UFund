@@ -1,51 +1,53 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LoginInfo } from './logininfo';
 
 const authUrl = 'http://localhost:8080/auth/';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  token = "";
-  username = "";
+  loginInfo?: LoginInfo;
   
   constructor(private http: HttpClient) { }
 
-  modHeaders() {
-    httpOptions.headers.append('token', this.token);
-    httpOptions.headers.append('username', this.username);
+  genHeaders() {
+    let username = localStorage.getItem('username');
+    let token = localStorage.getItem('token');
+    console.log('username: ' + username + '\ntoken: ' + token);
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'username': username === null ? '' : username,
+        'token': token === null ? '' : token
+      })
+    }
   }
 
   adminCheck(): boolean {
-    return httpOptions.headers.get('username') === 'admin';
+    return localStorage.getItem('username') === 'admin';
   }
   
   login(username:string, password:string) { 
     console.log('POST login: ' + username + ', ' + password);
-    this.http.post<string>(authUrl + 'login', {username, password}, httpOptions)
-        .subscribe(token => this.token = token);
-    
-    console.log(this.token);
-    //httpOptions.headers.append('jwt', this.token);
+    this.http.post<LoginInfo>(authUrl + 'login', {username, password}, this.genHeaders())
+        .subscribe(info => {
+                    console.log(info.token);
+                    localStorage.setItem('username', info.username);
+                    localStorage.setItem('token', info.token);
+                  });
   }
 
   logout() {
     console.log('POST logout')
-    this.http.post(authUrl + 'logout', {}, httpOptions);
+    this.http.post(authUrl + 'logout', {}, this.genHeaders());
   }
 
   register(username:string, password:string) {
     console.log('POST register: ' + username + ', ' + password);
-    return this.http.post(authUrl + 'register', {username, password}, httpOptions);
+    return this.http.post(authUrl + 'register', {username, password}, this.genHeaders());
   }
-
-  getOptions() {
-    return httpOptions;
-  } 
 }
