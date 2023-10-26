@@ -36,7 +36,10 @@ export class FundingBasketComponent implements OnInit {
   }
 
   onSubmit(): void {
-    
+    this.basketService.checkout().subscribe(() => {
+      this.basket = [];
+      this.getNeeds()
+    });
   }
 
   onSelect(need: Need): void {

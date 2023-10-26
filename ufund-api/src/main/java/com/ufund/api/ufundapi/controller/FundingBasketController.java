@@ -115,7 +115,7 @@ public class FundingBasketController {
         
         try{
             fundingBasket.checkout(username);
-            return new ResponseEntity<String>("checked out",HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.OK);
         }
         catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
