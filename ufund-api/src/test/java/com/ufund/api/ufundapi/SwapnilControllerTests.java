@@ -32,13 +32,13 @@ public class SwapnilControllerTests {
 		fileDao = new InventoryFileDAO(null, mapper);
 		controller = new InventoryController(fileDao);
 		for (Need need : needs) {
-			controller.createNeed(need);
+			controller.createNeed(need,"admin","aaa");
 		}
 	}
 	
 	@Test
 	void searchSuccessTest() {
-		ResponseEntity<Collection<Need>> response = controller.searchNeeds("test");
+		ResponseEntity<Collection<Need>> response = controller.searchNeeds("test","admin","aaa");
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		Need[] expected = {needs[0], needs[1]};
 		Need[] result = response.getBody().toArray(new Need[response.getBody().size()]);
@@ -47,7 +47,7 @@ public class SwapnilControllerTests {
 
 	@Test
 	void searchEmptyTest() {
-		ResponseEntity<Collection<Need>> response = controller.searchNeeds("badvalue");
+		ResponseEntity<Collection<Need>> response = controller.searchNeeds("badvalue","admin","aaa");
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		Need[] expected = new Need[0];
 		Need[] result = response.getBody().toArray(new Need[response.getBody().size()]);
@@ -56,7 +56,7 @@ public class SwapnilControllerTests {
 
 	@Test
 	void searchAltSuccessTest() {
-		ResponseEntity<Collection<Need>> response = controller.searchNeeds("unit");
+		ResponseEntity<Collection<Need>> response = controller.searchNeeds("unit","admin","aaa");
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		Need[] expected = {needs[2]};
 		Need[] result = response.getBody().toArray(new Need[response.getBody().size()]);
@@ -66,7 +66,7 @@ public class SwapnilControllerTests {
 	@Test
 	void updateSuccessTest() {
 		Need expected = new Need("unit", 20, 2, "base");
-		ResponseEntity<Need> response = controller.updateNeed(expected);
+		ResponseEntity<Need> response = controller.updateNeed(expected,"admin","aaa");
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(expected, response.getBody());
 	}
@@ -74,14 +74,14 @@ public class SwapnilControllerTests {
 	@Test
 	void updateFailureTest() {
 		Need expected = new Need("badtype", 20, 2, "base");
-		ResponseEntity<Need> response = controller.updateNeed(expected);
+		ResponseEntity<Need> response = controller.updateNeed(expected,"admin","aaa");
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 
 	@Test
 	void updateAltSuccessTest() {
 		Need expected = new Need("test", 20, 2, "base");
-		ResponseEntity<Need> response = controller.updateNeed(expected);
+		ResponseEntity<Need> response = controller.updateNeed(expected,"admin","aaa");
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(expected, response.getBody());
 	}

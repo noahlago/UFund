@@ -72,7 +72,7 @@ public class CupboardTests {
     void testController() throws IOException{
         InventoryFileDAO inventoryFIleDao = new InventoryFileDAO(null, mapper);
         InventoryController controller = new InventoryController(inventoryFIleDao);
-        controller.createNeed(new Need("bob", 0, 0, "bill"));
+        controller.createNeed(new Need("bob", 0, 0, "bill"),"admin","aaaa");
         assertNotNull(inventoryFIleDao.getNeeds());
     }
 }

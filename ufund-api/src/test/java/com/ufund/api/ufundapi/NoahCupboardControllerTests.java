@@ -20,9 +20,9 @@ public class NoahCupboardControllerTests {
         InventoryFileDAO fileDAO = new InventoryFileDAO(null, mapper);
         InventoryController controller = new InventoryController(fileDAO);
 
-        controller.createNeed(new Need("new", 20, 2, "quality"));
+        controller.createNeed(new Need("new", 20, 2, "quality"),"admin","aaaa");
 
-        assertEquals(controller.deleteNeed("new").getStatusCode(), HttpStatus.OK);
+        assertEquals(controller.deleteNeed("new","admin","aaa").getStatusCode(), HttpStatus.OK);
     }
 
     @Test
@@ -30,9 +30,9 @@ public class NoahCupboardControllerTests {
         InventoryFileDAO fileDAO = new InventoryFileDAO(null, mapper);
         InventoryController controller = new InventoryController(fileDAO);
         
-        controller.createNeed(new Need("new", 20, 2, "quality"));
+        controller.createNeed(new Need("new", 20, 2, "quality"),"admin","aaa");
 
-        assertEquals(controller.deleteNeed("uh oh").getStatusCode(), HttpStatus.NOT_FOUND);
+        assertEquals(controller.deleteNeed("uh oh","admin","aaaa").getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
     @Test
@@ -40,9 +40,9 @@ public class NoahCupboardControllerTests {
         InventoryFileDAO fileDAO = new InventoryFileDAO(null, mapper);
         InventoryController controller = new InventoryController(fileDAO);
         
-        controller.createNeed(new Need("new", 20, 2, "quality"));
+        controller.createNeed(new Need("new", 20, 2, "quality"),"admin","aaa");
 
-        assertEquals(controller.getNeed("new").getStatusCode(), HttpStatus.OK);
+        assertEquals(controller.getNeed("new","admin","aaa").getStatusCode(), HttpStatus.OK);
     }
 
     @Test
@@ -50,8 +50,8 @@ public class NoahCupboardControllerTests {
         InventoryFileDAO fileDAO = new InventoryFileDAO(null, mapper);
         InventoryController controller = new InventoryController(fileDAO);
         
-        controller.createNeed(new Need("new", 20, 2, "quality"));
+        controller.createNeed(new Need("new", 20, 2, "quality"),"admin","aaa");
 
-        assertEquals(controller.getNeed("uh oh").getStatusCode(), HttpStatus.NOT_FOUND);
+        assertEquals(controller.getNeed("uh oh","admin","aaa").getStatusCode(), HttpStatus.NOT_FOUND);
     }
 }

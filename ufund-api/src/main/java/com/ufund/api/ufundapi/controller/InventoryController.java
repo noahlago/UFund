@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufund.api.ufundapi.AuthUtils;
 import com.ufund.api.ufundapi.model.Need;
 import com.ufund.api.ufundapi.persistence.InventoryDAO;
 
@@ -39,8 +41,14 @@ public class InventoryController {
      * Gets all needs currently in the cupboard and returns as response entity with a Need Collection.
      */
     @GetMapping("")
-    public ResponseEntity<Collection<Need>> getNeed() {
+    public ResponseEntity<Collection<Need>> getNeed(@RequestHeader String username, @RequestHeader String token) {
         LOG.info("GET /inventory");
+
+
+        if(AuthUtils.isLoggedIn(token) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         try{
             Collection<Need> needs = inventoryDAO.getAllNeeds();
             return new ResponseEntity<Collection<Need>>(needs,HttpStatus.OK);
@@ -57,8 +65,15 @@ public class InventoryController {
      * If a new need is successfully created and added, that need is returned in the Response Entity, else returns null. 
      */
     @PostMapping("")
-    public ResponseEntity<Need> createNeed(@RequestBody Need need) {
+    public ResponseEntity<Need> createNeed(@RequestBody Need need, @RequestHeader String username, @RequestHeader String token) {
         LOG.info("POST /inventory " + need);
+
+        if(AuthUtils.isAdmin(username) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if(AuthUtils.isLoggedIn(token) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         try{
             Need newNeed = inventoryDAO.newNeed(need);
@@ -79,8 +94,15 @@ public class InventoryController {
      * If a matching need is successfully found and deleted, that need is returned, else null is returned. 
      */
     @DeleteMapping("/{name}")
-    public ResponseEntity<Need> deleteNeed(@PathVariable String name) {
+    public ResponseEntity<Need> deleteNeed(@PathVariable String name, @RequestHeader String username, @RequestHeader String token) {
         LOG.info("DELETE /inventory/" + name);
+
+        if(AuthUtils.isAdmin(username) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if(AuthUtils.isLoggedIn(token) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         try {
             Need need = inventoryDAO.getNeed(name);
@@ -102,8 +124,14 @@ public class InventoryController {
      * If a need is found with a matching name, it is returned as a Response Entity, otherwise null is returned. 
      */
     @GetMapping("/{name}")
-    public ResponseEntity<Need> getNeed(@PathVariable String name) {
+    public ResponseEntity<Need> getNeed(@PathVariable String name, @RequestHeader String username, @RequestHeader String token) {
         LOG.info("GET /inventory/" + name);
+
+  
+        if(AuthUtils.isLoggedIn(token) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         try {
             Need need = inventoryDAO.getNeed(name);
             if (need != null)
@@ -122,8 +150,12 @@ public class InventoryController {
      * If any matching needs are found, a Collection of them is returned as a Response Entity, else null is returned. 
      */
     @GetMapping("/")
-    public ResponseEntity<Collection<Need>> searchNeeds(@RequestParam String name) {
+    public ResponseEntity<Collection<Need>> searchNeeds(@RequestParam String name, @RequestHeader String username, @RequestHeader String token) {
         LOG.info("GET /inventory/?name="+name);
+
+        if(AuthUtils.isLoggedIn(token) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         try{
             Collection<Need> needsArray = inventoryDAO.searchNeed(name);
@@ -141,8 +173,15 @@ public class InventoryController {
      * If the need is successfully updated (a need with a matching name already existed), it is returned as a Response Entity, else null is returned. 
      */
     @PutMapping("")
-    public ResponseEntity<Need> updateNeed(@RequestBody Need need) {
+    public ResponseEntity<Need> updateNeed(@RequestBody Need need, @RequestHeader String username, @RequestHeader String token) {
         LOG.info("PUT /inventory " + need);
+        
+        if(AuthUtils.isAdmin(username) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if(AuthUtils.isLoggedIn(token) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         try{
             Need newNeed = inventoryDAO.updateNeed(need);
             if (newNeed != null)
