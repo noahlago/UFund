@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufund.api.ufundapi.AuthUtils;
@@ -43,7 +42,7 @@ public class FundingBasketController {
         }
       
         try{
-            Collection<Need> needs = fundingBasket.getNeeds();
+            Collection<Need> needs = fundingBasket.getNeeds(username);
             return new ResponseEntity<Collection<Need>>(needs,HttpStatus.OK);
         }
         catch(IOException e){
@@ -65,7 +64,7 @@ public class FundingBasketController {
         }
 
         try{
-            Need newNeed = fundingBasket.addNeed(need);
+            Need newNeed = fundingBasket.addNeed(need,username);
             if (newNeed != null)
                 return new ResponseEntity<Need>(newNeed,HttpStatus.CREATED);
             else
@@ -90,9 +89,9 @@ public class FundingBasketController {
         }
 
         try {
-            Need need = fundingBasket.getNeed(name);
+            Need need = fundingBasket.getNeed(name,username);
             if(need != null){
-                fundingBasket.deleteNeed(need);
+                fundingBasket.deleteNeed(need,username);
                 return new ResponseEntity<Need>(need,HttpStatus.OK);
             }else{                
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -105,7 +104,7 @@ public class FundingBasketController {
 
 
     @PostMapping("/checkout")
-    public ResponseEntity<String> checkout(@PathVariable String name, @RequestHeader String username, @RequestHeader String token){
+    public ResponseEntity<String> checkout(@RequestHeader String username, @RequestHeader String token){
 
         if(AuthUtils.isAdmin(username) == true){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -115,7 +114,7 @@ public class FundingBasketController {
         }
         
         try{
-            fundingBasket.checkout();
+            fundingBasket.checkout(username);
             return new ResponseEntity<String>("checked out",HttpStatus.OK);
         }
         catch(IOException e){
