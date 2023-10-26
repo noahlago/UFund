@@ -4,6 +4,20 @@ import { LoginInfo } from './logininfo';
 
 const authUrl = 'http://localhost:8080/auth/';
 
+export function adminCheck(): boolean {
+  return localStorage.getItem('username') === 'admin';
+}
+
+export function loginCheck(): boolean {
+  let username = localStorage.getItem('username');
+  let token = localStorage.getItem('token');
+  return username !== null && token !== null
+}
+
+export function getUsername() {
+  return localStorage.getItem('username')
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +41,11 @@ export class AuthService {
     }
   }
 
-  adminCheck(): boolean {
-    return localStorage.getItem('username') === 'admin';
-  }
   
   login(username:string, password:string) { 
     console.log('POST login: ' + username + ', ' + password);
     this.http.post<LoginInfo>(authUrl + 'login', {username, password}, this.genHeaders())
         .subscribe(info => {
-                    console.log(info.token);
                     localStorage.setItem('username', info.username);
                     localStorage.setItem('token', info.token);
                   });
@@ -43,7 +53,10 @@ export class AuthService {
 
   logout() {
     console.log('POST logout')
-    this.http.post(authUrl + 'logout', {}, this.genHeaders());
+    this.http.post(authUrl + 'logout', {}, this.genHeaders())
+    .subscribe(() => {
+      localStorage.clear()
+    })
   }
 
   register(username:string, password:string) {

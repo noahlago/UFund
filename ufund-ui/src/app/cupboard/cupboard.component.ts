@@ -3,6 +3,7 @@ import { CupboardService } from '../cupboard.service';
 import { Need } from '../need';
 import { FundingBasketService } from '../funding-basket.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { adminCheck } from '../auth.service';
 
 
 @Component({
@@ -11,14 +12,14 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: [ '../../styles.css', './cupboard.component.css']
 })
 export class CupboardComponent implements OnInit {
-  constructor(private cupboardService: CupboardService, 
+  constructor(private cupboardService: CupboardService,
               private fundingBasketService: FundingBasketService,
               private formBuilder: FormBuilder) {}
 
 
   cupboard: Need[] = []; 
   selectedNeed?: Need;
-  admin = this.cupboardService.admin;
+  admin = adminCheck;
 
   createForm = this.formBuilder.group({
     name: ['', Validators.required],
@@ -29,6 +30,18 @@ export class CupboardComponent implements OnInit {
   
   ngOnInit(): void {
     this.getNeeds();
+  }
+
+  searchNeeds(term: string): void {
+    if (!term.trim()) {
+      this.getNeeds()
+    } else {
+      this.cupboardService.searchNeeds(term)
+        .subscribe(needs => {
+          this.cupboard = []
+          this.cupboard = needs
+        }); 
+    }
   }
 
   getNeeds(): void {

@@ -1,11 +1,16 @@
 <nav>
   <div class="left-nav">
-    <a routerLink="/login">Login</a>
+    <a routerLink="/login" *ngIf="!login()">Login</a>
+    <a class="no_hover" *ngIf="login()">Logged in as: {{username()}}</a>
+    <a routerLink="/" (click)="logout()" *ngIf="login()">Logout</a>
   </div>
   <h2 routerLink="/">UFund</h2>
   <div class="right-nav">
-    <a routerLink="/cupboard">Cupboard</a>
-    <a routerLink="/basket">Funding Basket</a>
+    <a routerLink="/cupboard" *ngIf="login()">Cupboard</a>
+    <a routerLink="/basket" *ngIf="!admin() && login()">Funding Basket</a>
   </div>
 </nav>
 <router-outlet class="contents"></router-outlet>
+<div *ngIf="checkRoot()">
+  Welcome To UFund!
+</div>

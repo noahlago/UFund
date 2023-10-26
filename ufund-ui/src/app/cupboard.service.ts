@@ -14,7 +14,6 @@ export class CupboardService {
   
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  admin = this.auth.adminCheck();
   options = this.auth.genHeaders();
 
   getNeeds(): Observable<Need[]> {

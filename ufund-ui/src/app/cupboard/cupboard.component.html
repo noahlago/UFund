@@ -1,8 +1,9 @@
 <h2>Cupboard</h2>
 <div class="fullbox">
-  <ul class="cupboard">
-    <li *ngFor="let need of cupboard">
-      <div class="item">
+  <div class="cupboard">
+    <input class="search-box" #searchBox (input)="searchNeeds(searchBox.value)" placeholder="Search">
+    <ul>
+      <li class="item" *ngFor="let need of cupboard">
         <button [class.selected]="need === selectedNeed" (click)="onSelect(need)">
           <span class="badge">${{need.cost}}</span>
           <span class="name">{{need.name}}</span>
@@ -14,10 +15,10 @@
             Add to Basket
           </button>
         </div>
-      </div>
-    </li>
-  </ul>
-  <div class="admin-box" *ngIf="admin">
+      </li>
+    </ul>
+  </div>
+  <div class="admin-box" *ngIf="admin()">
     <form class="create-box" [formGroup]="createForm">
       <h3>Create Need</h3>
       <label>Name</label>
