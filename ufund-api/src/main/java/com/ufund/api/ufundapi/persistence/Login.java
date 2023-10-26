@@ -32,7 +32,6 @@ public class Login {
     }
 
     public String login(LoginInfo info) throws IOException{
-        System.out.println("logging in");
         Random random = new Random();
 
         String token = "";
@@ -46,9 +45,13 @@ public class Login {
             users.put(user.getUsername(), user.getPassword());
         }
 
-        int expected = users.get(info.getUsername());
+        Integer expected = users.get(info.getUsername());
+        String password = "" + info.getPassword();
+        Integer actual = password.hashCode();
+        System.out.println(expected);
+        System.out.println(actual.hashCode());
 
-        if(expected == info.getPassword()){
+        if(expected == actual.hashCode()){
             for(int i = 0; i < 16; i++){
                 String alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789";
                 int randInt = random.nextInt(alphanumeric.length() - 1);
