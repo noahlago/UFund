@@ -15,7 +15,7 @@ import com.ufund.api.ufundapi.model.Need;
 
 @Component
 public class FundingBasket {
-    private HashMap<String,LinkedList<Need>> users;
+    private HashMap<String,ArrayList<Need>> users;
     private String filename;
     private ObjectMapper objectMapper;
 
@@ -74,7 +74,7 @@ public class FundingBasket {
             }
         }
         else{
-            users.put(username, new LinkedList<>());
+            users.put(username, new ArrayList<>());
             users.get(username).add(need);
             save();
             return need;
