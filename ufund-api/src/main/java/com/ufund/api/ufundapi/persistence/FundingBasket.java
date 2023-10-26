@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.model.Need;
 
@@ -43,7 +44,7 @@ public class FundingBasket {
             return;
         }
 
-        this.users = objectMapper.readValue(new File(filename),HashMap.class);
+        this.users = objectMapper.readValue(new File(filename),new TypeReference<HashMap<String, ArrayList<Need>>>(){});
 
 
     }
