@@ -1,6 +1,13 @@
+.fullbox {
+  display: flex;
+  flex-direction: row;
+  place-content: center;
+}
+
 .item {
   width: 6em;
   margin: 10px;
+  height: fit-content;
 }
 
 .item button {
@@ -16,10 +23,19 @@
 }
 
 .cupboard {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+}
+
+.cupboard ul {
   display: flex;
   direction: horizontal;
   list-style-type: none;
   justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
 }
 
 .badge {
@@ -54,4 +70,14 @@
   width: 70%;
   font-size: small;
   align-self: center;
+}
+
+.create-box,
+.edit-box {
+  margin: 3px;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  background-color: #8EBAC4;
 }

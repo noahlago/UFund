@@ -1,0 +1,66 @@
+.fullbox {
+  display: flex;
+  flex-direction: row;
+  place-content: center;
+}
+
+.item {
+  width: 6em;
+  margin: 10px;
+  height: fit-content;
+}
+
+.item button {
+  margin: 0;
+  padding-left: 0px;
+  width: inherit;
+}
+
+.selected {
+  width: inherit;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.basket {
+  display: flex;
+  direction: horizontal;
+  list-style-type: none;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
+}
+
+.badge {
+  justify-self: left;
+  background-color: #B3A4DB;
+  margin-right: 5px;
+  padding: inherit;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: inherit;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: inherit;
+  background-color: #8EBAC4;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.info p {
+  align-self: center;
+  margin: 0;
+}
+
+.remove {
+  margin: auto;
+  padding: 3px;
+  width: 70%;
+  font-size: small;
+  align-self: center;
+}

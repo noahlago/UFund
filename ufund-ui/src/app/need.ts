@@ -1,6 +1,6 @@
 export interface Need {
 	name: string;
-	cost: bigint;
-	quantity: bigint;
+	cost: number;
+	quantity: number;
 	type: string;
 }

@@ -1,21 +1,50 @@
 <h2>Cupboard</h2>
-<ul class="cupboard">
-  <li *ngFor="let need of cupboard">
-    <div class="item">
-      <button [class.selected]="need === selectedNeed" (click)="onSelect(need)">
-        <span class="badge">${{need.cost}}</span>
-        <span class="name">{{need.name}}</span>
-      </button>
-      <div class="info" *ngIf="need === selectedNeed">
-        <p>Type: {{need.type}}</p>
-        <p>Quantity: {{need.quantity}}</p>
-        <button class="basket" (click)="addToBasket()">
-          Add to Basket
+<div class="fullbox">
+  <div class="cupboard">
+    <input class="search-box" #searchBox (input)="searchNeeds(searchBox.value)" placeholder="Search">
+    <ul>
+      <li class="item" *ngFor="let need of cupboard">
+        <button [class.selected]="need === selectedNeed" (click)="onSelect(need)">
+          <span class="badge">${{need.cost}}</span>
+          <span class="name">{{need.name}}</span>
         </button>
+        <div class="info" *ngIf="need === selectedNeed">
+          <p>Type: {{need.type}}</p>
+          <p>Quantity: {{need.quantity}}</p>
+          <button class="basket" (click)="addToBasket()">
+            Add to Basket
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="admin-box" *ngIf="admin()">
+    <form class="create-box" [formGroup]="createForm">
+      <h3>Create Need</h3>
+      <label>Name</label>
+      <input type='text' formControlName="name">
+      <label>Cost</label>
+      <input type="number" formControlName="cost">
+      <label>Quantity</label>
+      <input type="number" formControlName="quantity">
+      <label>Type</label>
+      <input type="text" formControlName="type">
+      <button type="submit" (click)="onCreate()">Create</button>
+    </form>
+    <div class="edit-box" *ngIf="selectedNeed">
+      <h3>Edit Need</h3>
+      <label>Name</label>
+      <input type="text" [(ngModel)]="selectedNeed.name" placeholder="name">
+      <label>Cost</label>
+      <input type="number" [(ngModel)]="selectedNeed.cost" placeholder=0>
+      <label>Quantity</label>
+      <input type="number" [(ngModel)]="selectedNeed.quantity" placeholder=0>
+      <label>Type</label>
+      <input type="text" [(ngModel)]="selectedNeed.type" placeholder="type">
+      <div>
+        <button type="submit" (click)="onUpdate(selectedNeed)">Update</button>
+        <button type="submit" (click)="onDelete(selectedNeed)">Delete</button>
       </div>
     </div>
-  </li>
-</ul>
-<div *ngIf="admin">
-
+  </div>
 </div>

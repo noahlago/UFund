@@ -31,4 +31,9 @@ public class LoginInfo {
         return String.format(STRING_FORMAT, username, password, token);
     }   
 
+    // public static void main(String[] args) {
+    //     String password = "wbdanawawf";
+    //     System.out.println(password.hashCode());
+    // }
+
 }

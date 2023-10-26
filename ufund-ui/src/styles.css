@@ -80,8 +80,8 @@ nav a {
   text-decoration-line: none;
   background-color: #95add8;
   padding: .5em;
-  border-radius: 5px;
   margin: 2px;
+  border-radius: 5px;
 }
 
 .selected,
@@ -114,6 +114,19 @@ nav a.active {
 .contents {
   display: flex;
   width: 70%;
-  flex-direction: horizontal;
-  justify-content: center;
+  flex-direction: row;
+  justify-items: center;
+}
+
+.logout {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  height: inherit;
+}
+
+.no_hover:hover {
+  cursor: default;
+  color: black;
+  background-color: #95add8;
 }
