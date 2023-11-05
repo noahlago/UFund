@@ -58,6 +58,7 @@ public class InventoryFileDAO implements InventoryDAO{
 
         Need[] needArray = objectMapper.readValue(new File(filename),Need[].class);
 
+        needs = new HashMap<>();
 
         for (Need need : needArray) {
             needs.put(need.getName(), need);
@@ -78,7 +79,8 @@ public class InventoryFileDAO implements InventoryDAO{
         return needArray;
     }
 
-    public HashMap<String,Need> getNeeds(){
+    public HashMap<String,Need> getNeeds() throws IOException{
+        load();
         return this.needs;
     }
 
@@ -138,6 +140,7 @@ public class InventoryFileDAO implements InventoryDAO{
      * returns OK status
      */
     public Collection<Need> getAllNeeds() throws IOException {
+        load();
         Collection<Need> all = this.needs.values();
         return all;
     }

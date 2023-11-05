@@ -17,13 +17,18 @@ import com.ufund.api.ufundapi.model.Need;
 @Component
 public class FundingBasket {
     private HashMap<String,ArrayList<Need>> users;
+    private HashMap<String,Need> inventoryNeeds;
     private String filename;
+    private String inventoryFile;
     private ObjectMapper objectMapper;
 
-    public FundingBasket(@Value("${basket.file}") String filename, ObjectMapper objectMapper){
+    public FundingBasket(@Value("${basket.file}") String filename, @Value("${needs.file}") String filename2, ObjectMapper objectMapper){
         this.filename = filename;
+        this.inventoryFile = filename2;
         this.objectMapper = objectMapper;
         this.users = new HashMap<>();
+        this.inventoryNeeds = new HashMap<>();
+
 
         try{
             load();
@@ -36,32 +41,47 @@ public class FundingBasket {
             return false;
         }
         objectMapper.writeValue(new File(filename),users);
+
+
+        Need[] needArray = getNeedsArray(null);
+
+        objectMapper.writeValue(new File(inventoryFile),needArray);
+        
         return true;
     }
 
     private void load() throws IOException{
-        if(filename == null){
+        if(filename == null || inventoryFile == null){
             return;
         }
 
         this.users = objectMapper.readValue(new File(filename),new TypeReference<HashMap<String, ArrayList<Need>>>(){});
 
+        Need[] needArray = objectMapper.readValue(new File(inventoryFile),Need[].class);
 
+
+        for (Need need : needArray) {
+            inventoryNeeds.put(need.getName(), need);
+        }
     }
 
-    // private Need[] getNeedsArray(String containsText) { // if containsText == null, no filter
-    //     ArrayList<Need> needArrayList = new ArrayList<>();
+        private Need[] getNeedsArray(String containsText) { // if containsText == null, no filter
+            ArrayList<Need> needArrayList = new ArrayList<>();
+    
+            for (Need need : inventoryNeeds.values()) {
+                if (containsText == null || need.getName().contains(containsText)) {
+                    needArrayList.add(need);
+                }
+            }
+    
+            Need[] needArray = new Need[needArrayList.size()];
+            needArrayList.toArray(needArray);
+            return needArray;
+        }
 
-    //     for (Need need : needs.values()) {
-    //         if (containsText == null || need.getName().contains(containsText)) {
-    //             needArrayList.add(need);
-    //         }
-    //     }
 
-    //     Need[] needArray = new Need[needArrayList.size()];
-    //     needArrayList.toArray(needArray);
-    //     return needArray;
-    // }
+    
+
 
     public Need addNeed(Need need, String username) throws IOException{
         if(users.containsKey(username)){
@@ -111,6 +131,18 @@ public class FundingBasket {
     }
 
     public void checkout(String username) throws IOException{
+        
+        for (Need need: users.get(username)){
+            int quantity = need.getQuantity();
+            int newQuantity = quantity - 1;
+            if(newQuantity == 0){
+                inventoryNeeds.remove(need.getName());
+            }
+            else{
+                Need newNeed = new Need(need.getName(), need.getCost(), newQuantity, need.getType());
+                inventoryNeeds.put(need.getName(), newNeed);
+            }
+        }
         users.remove(username);
         save();
     }

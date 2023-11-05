@@ -19,6 +19,7 @@ public class FundingBasketTests {
     private ObjectMapper mapper = new ObjectMapper();
     private FundingBasket basket;
     private static final String TEST_FILENAME = "testbasket.json";
+    private static final String TEST_FILENAME2 = "testinventory.json";
     private static final String TEST_USERNAME = "testUser";
 
     @BeforeEach
@@ -28,7 +29,7 @@ public class FundingBasketTests {
             file.delete();
         }
 
-        basket = new FundingBasket(TEST_FILENAME, mapper);
+        basket = new FundingBasket(TEST_FILENAME,TEST_FILENAME2, mapper);
     }
 
     @Test
@@ -96,7 +97,7 @@ public class FundingBasketTests {
         Need need2 = new Need("testNeed2", 15, 3, "base");
         basket.addNeed(need1, TEST_USERNAME);
         basket.addNeed(need2, TEST_USERNAME);
-        basket = new FundingBasket(TEST_FILENAME, mapper);
+        basket = new FundingBasket(TEST_FILENAME, TEST_FILENAME2,mapper);
         Collection<Need> userNeeds = basket.getNeeds(TEST_USERNAME);
         assertNotNull(userNeeds);
         assertEquals(2, userNeeds.size());
