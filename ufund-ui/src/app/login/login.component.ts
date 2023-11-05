@@ -34,6 +34,7 @@ export class LoginComponent {
       }
       case "register": {
         this.register();
+        break;
       }
     }
   }
@@ -47,14 +48,25 @@ export class LoginComponent {
   } 
 
   login() {
-    return this.authService.login(this.username!, this.password!);
+    this.authService.login(this.username!, this.password!)
+      .subscribe(info => {
+                    localStorage.setItem('username', info.username);
+                    localStorage.setItem('token', info.token)
+                  });
   }
 
   logout() {
-    return this.authService.logout();
+    this.authService.logout()
+      .subscribe(() => {
+        localStorage.clear()
+      });
   }
 
   register() {
-    return this.authService.register(this.username!, this.password!);
+    this.authService.register(this.username!, this.password!)
+        .subscribe(info => {
+                    localStorage.setItem('username', info.username);
+                    localStorage.setItem('token', info.token);
+                  });
   }  
 }

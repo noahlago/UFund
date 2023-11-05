@@ -8,13 +8,15 @@ import { CupboardComponent } from './cupboard/cupboard.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { FundingBasketComponent } from './funding-basket/funding-basket.component';
+import { StatusComponent } from './status/status.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CupboardComponent,
     LoginComponent,
-    FundingBasketComponent
+    FundingBasketComponent,
+    StatusComponent
   ],
   imports: [
     BrowserModule,

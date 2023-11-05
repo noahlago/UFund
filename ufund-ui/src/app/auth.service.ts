@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { LoginInfo } from './logininfo';
+import { StatusService } from './status.service';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 const authUrl = 'http://localhost:8080/auth/';
 
@@ -26,7 +29,8 @@ export class AuthService {
 
   loginInfo?: LoginInfo;
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private status: StatusService ) { }
 
   genHeaders() {
     let username = localStorage.getItem('username');
@@ -44,23 +48,22 @@ export class AuthService {
   
   login(username:string, password:string) { 
     console.log('POST login: ' + username + ', ' + password);
-    this.http.post<LoginInfo>(authUrl + 'login', {username, password}, this.genHeaders())
-        .subscribe(info => {
-                    localStorage.setItem('username', info.username);
-                    localStorage.setItem('token', info.token);
-                  });
+    return this.http.post<LoginInfo>(authUrl + 'login', {username, password}, this.genHeaders())
+      .pipe(catchError((err: HttpErrorResponse) => {
+        if (err.status == 403) {
+          localStorage.clear()
+        }
+        return new Observable<LoginInfo>;
+      }));
   }
 
   logout() {
     console.log('POST logout')
-    this.http.post(authUrl + 'logout', {}, this.genHeaders())
-    .subscribe(() => {
-      localStorage.clear()
-    })
+    return this.http.post(authUrl + 'logout', {}, this.genHeaders())
   }
 
   register(username:string, password:string) {
     console.log('POST register: ' + username + ', ' + password);
-    return this.http.post(authUrl + 'register', {username, password}, this.genHeaders());
+    return this.http.post<LoginInfo>(authUrl + 'register', {username, password}, this.genHeaders())
   }
 }
