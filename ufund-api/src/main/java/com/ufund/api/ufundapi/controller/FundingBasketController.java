@@ -102,7 +102,6 @@ public class FundingBasketController {
         }
     }
 
-
     @PostMapping("/checkout")
     public ResponseEntity<String> checkout(@RequestHeader String username, @RequestHeader String token){
 
@@ -115,7 +114,7 @@ public class FundingBasketController {
         
         try{
             fundingBasket.checkout(username);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<String>(HttpStatus.OK);
         }
         catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());

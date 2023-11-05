@@ -1,23 +1,15 @@
 package com.ufund.api.ufundapi;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ufund.api.ufundapi.model.Need;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Map;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.model.LoginInfo;
 import com.ufund.api.ufundapi.persistence.Login;
 
