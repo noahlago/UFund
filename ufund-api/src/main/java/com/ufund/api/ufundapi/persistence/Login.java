@@ -8,18 +8,23 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.model.LoginInfo;
 
 @Component
 public class Login {
     private HashMap<String, String> loggedIn;
+    private HashMap<String, String> accounts;
     private String filename;
     private ObjectMapper objectMapper;
 
-    public Login(@Value("${keys.file}") String filename, ObjectMapper objectMapper){
+    public Login(@Value("${keys.file}") String filename, ObjectMapper objectMapper) throws StreamReadException, DatabindException, IOException{
         this.filename = filename;
         this.loggedIn = new HashMap<>();
+        this.accounts = objectMapper.readValue(new File(filename), new TypeReference<HashMap<String, String>>(){});
         this.objectMapper = objectMapper;
     }
 
@@ -74,6 +79,17 @@ public class Login {
             return false;
         }
         
+    }
+
+    public String register(LoginInfo info) throws IOException{
+        if(filename == null || accounts.containsKey(info.getUsername())){
+            return null;
+        }else{
+            accounts.put(info.getUsername(), "" + info.getPassword());
+            objectMapper.writeValue(new File(filename), accounts);
+
+            return login(info);
+        }
     }
 
     public boolean authenticate(String username, String token){

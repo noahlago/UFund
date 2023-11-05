@@ -56,7 +56,24 @@ public class LoginController {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             else{
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+        }catch(IOException e){
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("register")
+    public ResponseEntity<LoginInfo> register(@RequestHeader LoginInfo info) throws IOException{
+        LOG.info("POST /auth/register" + info);
+
+        try{
+            String token = login.register(info);
+            if(token.length() == 0){
+                return new ResponseEntity<LoginInfo>(info, HttpStatus.CONFLICT);
+            }else{
+                return new ResponseEntity<LoginInfo>(info, HttpStatus.OK);
             }
         }catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
