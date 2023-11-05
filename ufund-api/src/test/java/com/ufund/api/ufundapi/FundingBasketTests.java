@@ -104,4 +104,20 @@ public class FundingBasketTests {
         assertTrue(userNeeds.contains(need1));
         assertTrue(userNeeds.contains(need2));
     }
+
+    @Test
+    void testCheckout() throws IOException{
+        Need need1 = new Need("testNeed1", 10, 2, "quality");
+        basket.addNeed(need1, TEST_USERNAME);
+        basket.checkout(TEST_USERNAME);
+        assertEquals(basket.getNeeds(TEST_USERNAME), null);
+    }
+
+    @Test
+    void testCheckoutQuantity1() throws IOException{
+        Need need1 = new Need("testNeed7", 10, 1, "quality");
+        basket.addNeed(need1, TEST_USERNAME);
+        basket.checkout(TEST_USERNAME);
+        assertEquals(basket.getNeeds(TEST_USERNAME), null);
+    }
 }
