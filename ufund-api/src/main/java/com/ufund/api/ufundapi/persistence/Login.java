@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.model.LoginInfo;
@@ -23,7 +22,7 @@ public class Login {
     /**
      * Stores account info for all users, with usernames as keys and (hashed) passwords as values
      */
-    private HashMap<String, String> accounts;
+    private HashMap<String, LoginInfo> accounts;
     /**
      * Stores the filename where all authentication info is stored (keys.json)
      */
@@ -43,8 +42,17 @@ public class Login {
     public Login(@Value("${keys.file}") String filename, ObjectMapper objectMapper) throws StreamReadException, DatabindException, IOException{
         this.filename = filename;
         this.loggedIn = new HashMap<>();
-        this.accounts = objectMapper.readValue(new File(filename), new TypeReference<HashMap<String, String>>(){});
+
         this.objectMapper = objectMapper;
+
+        LoginInfo[] infos = objectMapper.readValue(new File(filename), LoginInfo[].class);
+
+        accounts = new HashMap<String,LoginInfo>();
+
+        for(int i = 0; i < infos.length; i++){
+            LoginInfo user = infos[i];
+            accounts.put(user.getUsername(), user);
+        }
     }
 
     /**
@@ -132,8 +140,8 @@ public class Login {
         if(filename == null || accounts.containsKey(info.getUsername())){
             return "";
         }else{
-            accounts.put(info.getUsername(), "" + info.getPassword());
-            objectMapper.writeValue(new File(filename), accounts);
+            accounts.put(info.getUsername(), info);
+            objectMapper.writeValue(new File(filename), accounts.values());
 
             return login(info);
         }
