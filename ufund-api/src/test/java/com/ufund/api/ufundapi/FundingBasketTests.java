@@ -19,6 +19,7 @@ public class FundingBasketTests {
     private ObjectMapper mapper = new ObjectMapper();
     private FundingBasket basket;
     private static final String TEST_FILENAME = "testbasket.json";
+    private static final String TEST_FILENAME2 = "testinventory.json";
     private static final String TEST_USERNAME = "testUser";
 
     @BeforeEach
@@ -28,7 +29,7 @@ public class FundingBasketTests {
             file.delete();
         }
 
-        basket = new FundingBasket(TEST_FILENAME, mapper);
+        basket = new FundingBasket(TEST_FILENAME,TEST_FILENAME2, mapper);
     }
 
     @Test
@@ -96,11 +97,27 @@ public class FundingBasketTests {
         Need need2 = new Need("testNeed2", 15, 3, "base");
         basket.addNeed(need1, TEST_USERNAME);
         basket.addNeed(need2, TEST_USERNAME);
-        basket = new FundingBasket(TEST_FILENAME, mapper);
+        basket = new FundingBasket(TEST_FILENAME, TEST_FILENAME2,mapper);
         Collection<Need> userNeeds = basket.getNeeds(TEST_USERNAME);
         assertNotNull(userNeeds);
         assertEquals(2, userNeeds.size());
         assertTrue(userNeeds.contains(need1));
         assertTrue(userNeeds.contains(need2));
+    }
+
+    @Test
+    void testCheckout() throws IOException{
+        Need need1 = new Need("testNeed1", 10, 2, "quality");
+        basket.addNeed(need1, TEST_USERNAME);
+        basket.checkout(TEST_USERNAME);
+        assertEquals(basket.getNeeds(TEST_USERNAME), null);
+    }
+
+    @Test
+    void testCheckoutQuantity1() throws IOException{
+        Need need1 = new Need("testNeed7", 10, 1, "quality");
+        basket.addNeed(need1, TEST_USERNAME);
+        basket.checkout(TEST_USERNAME);
+        assertEquals(basket.getNeeds(TEST_USERNAME), null);
     }
 }

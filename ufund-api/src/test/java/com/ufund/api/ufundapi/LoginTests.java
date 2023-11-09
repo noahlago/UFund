@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +23,7 @@ public class LoginTests {
     private String testFilename;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws StreamReadException, DatabindException, IOException {
         this.testFilename = "test-keys.json";
         this.objectMapper = new ObjectMapper();
         this.login = new Login(testFilename, objectMapper);

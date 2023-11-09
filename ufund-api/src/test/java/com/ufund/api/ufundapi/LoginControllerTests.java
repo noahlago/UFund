@@ -96,7 +96,7 @@ public class LoginControllerTests {
 
         ResponseEntity<Object> response = loginController.logout(invalidUsername, validToken);
 
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     }
 
     @Test
