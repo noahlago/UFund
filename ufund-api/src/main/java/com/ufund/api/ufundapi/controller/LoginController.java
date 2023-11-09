@@ -96,7 +96,7 @@ public class LoginController {
      * If registration is successfuul, the LoginInfo instance is updated with the session key, and sent along with a 200 status
      */
     @PostMapping("register")
-    public ResponseEntity<LoginInfo> register(@RequestHeader LoginInfo info) throws IOException{
+    public ResponseEntity<LoginInfo> register(@RequestBody LoginInfo info) throws IOException{
         LOG.info("POST /auth/register" + info);
 
         try{
