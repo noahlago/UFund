@@ -32,11 +32,6 @@ public class LoginInfo {
         this.token = "";
     }
 
-    public LoginInfo(@JsonProperty("username") String username, @JsonProperty("password") int password, @JsonProperty("token") String token){
-        this.username = username;
-        this.password = password;
-        this.token = token;
-    }
     /**
      * @param token represents a session key
      * If the user has been logged out, the session key is reset to en empty String
