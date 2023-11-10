@@ -140,6 +140,9 @@ public class Login {
         if(filename == null || accounts.containsKey(info.getUsername())){
             return "";
         }else{
+            for(LoginInfo account : accounts.values()){
+                account.revertPassword();
+            }
             accounts.put(info.getUsername(), info);
             objectMapper.writeValue(new File(filename), accounts.values());
 
