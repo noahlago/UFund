@@ -20,6 +20,8 @@ public class LoginInfo {
      */
     @JsonProperty("token") private String token;
 
+    private String pastPassword;
+
     /**
      * @param username username credential represented as a String
      * @param password password credential represented as a String
@@ -29,6 +31,7 @@ public class LoginInfo {
     public LoginInfo(@JsonProperty("username") String username, @JsonProperty("password") String password){
         this.username = username;
         this.password = password.hashCode();
+        this.pastPassword = password;
         this.token = "";
     }
 
@@ -49,13 +52,26 @@ public class LoginInfo {
         return this.password;
     }
 
+    public void revertPassword(){
+        this.password = Integer.parseInt(this.pastPassword);
+    }
+
     @Override
     public String toString() {
         return String.format(STRING_FORMAT, username, password, token);
     }   
 
     // public static void main(String[] args) {
-    //     String password = "some_password";
+    //     String password = "WhyMichael?";
+    //     System.out.println(password.hashCode());
+
+    //     password = "random";
+    //     System.out.println(password.hashCode());
+
+    //     password = "other";
+    //     System.out.println(password.hashCode());
+
+    //     password = "name";
     //     System.out.println(password.hashCode());
     // }
 
