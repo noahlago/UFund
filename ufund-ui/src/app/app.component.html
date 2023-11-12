@@ -10,6 +10,7 @@
     <a routerLink="/basket" *ngIf="!admin() && login()">Funding Basket</a>
   </div>
 </nav>
+<app-status></app-status>
 <router-outlet class="contents"></router-outlet>
 <div *ngIf="checkRoot()">
   Welcome To UFund!

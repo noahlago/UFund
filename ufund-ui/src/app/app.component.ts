@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService, adminCheck, loginCheck, getUsername } from './auth.service';
+import { StatusService } from './status.service';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +13,17 @@ export class AppComponent {
   login = loginCheck
   username = getUsername
   
-
-  constructor(private authService: AuthService ) {}
+  constructor(private authService: AuthService,
+              private statusService: StatusService ) {}
 
   logout(): void {
-    this.authService.logout();
+    this.authService.logout().subscribe(() => {
+      localStorage.clear()
+      this.statusService.reportGood('Logged Out', '200; Credentials Cleared')
+    });
   }
 
-  checkRoot() {
+  checkRoot(): boolean {
     return location.pathname === '/'
   }
 }

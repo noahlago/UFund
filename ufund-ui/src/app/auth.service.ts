@@ -5,7 +5,7 @@ import { StatusService } from './status.service';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-const authUrl = 'http://localhost:8080/auth/';
+const authUrl: string = 'http://localhost:8080/auth/';
 
 export function adminCheck(): boolean {
   return localStorage.getItem('username') === 'admin';
@@ -17,10 +17,9 @@ export function loginCheck(): boolean {
   return username !== null && token !== null
 }
 
-export function getUsername() {
+export function getUsername(): string | null {
   return localStorage.getItem('username')
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -32,10 +31,9 @@ export class AuthService {
   constructor(private http: HttpClient,
               private status: StatusService ) { }
 
-  genHeaders() {
+  genOptions(): {headers: HttpHeaders} {
     let username = localStorage.getItem('username');
     let token = localStorage.getItem('token');
-    console.log('username: ' + username + '\ntoken: ' + token);
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -46,24 +44,66 @@ export class AuthService {
   }
 
   
-  login(username:string, password:string) { 
-    console.log('POST login: ' + username + ', ' + password);
-    return this.http.post<LoginInfo>(authUrl + 'login', {username, password}, this.genHeaders())
-      .pipe(catchError((err: HttpErrorResponse) => {
-        if (err.status == 403) {
-          localStorage.clear()
+  login(username:string, password:string): Observable<LoginInfo> { 
+    this.status.reportInfo(null, 'POST /auth/login');
+    return this.http.post<LoginInfo>(authUrl + 'login', {username, password}, this.genOptions())
+     .pipe(catchError((err : HttpErrorResponse) => {
+        switch (err.status) {
+          case (403):
+            this.status.reportError('Either your username or password is incorrect.', '403; Invalid Credentials.');
+            break;
+          case (500):
+            this.status.reportError('An internal error has occured, try again later.', '500');
+            break;
+          default:
+            this.status.reportError('An unknown error occured', err.status.toString());
+            break;
         }
         return new Observable<LoginInfo>;
       }));
   }
 
-  logout() {
-    console.log('POST logout')
-    return this.http.post(authUrl + 'logout', {}, this.genHeaders())
+  logout(): Observable<undefined> {
+    this.status.reportInfo(null, 'POST /auth/logout')
+    return this.http.post<undefined>(authUrl + 'logout', {}, this.genOptions())
+      .pipe(catchError((err: HttpErrorResponse) => {
+        switch (err.status) {
+          case (403):
+            /*On API reset the keys are cleared but
+            Frontend is not privy to this. This catches
+            the edge case and clears storage to prevent
+            a lockout.
+            */
+            this.status.reportGood('Logged Out', '403; Clearing bad credentials.');
+            localStorage.clear();
+            break;
+          case (500):
+            this.status.reportError('An internal error has occured, try again later.', '500');
+            break;
+          default:
+            this.status.reportError('An unknown error occured', err.status.toString());
+            break;
+        }
+        return new Observable<undefined>;
+      }));
   }
 
-  register(username:string, password:string) {
-    console.log('POST register: ' + username + ', ' + password);
-    return this.http.post<LoginInfo>(authUrl + 'register', {username, password}, this.genHeaders())
+  register(username:string, password:string): Observable<LoginInfo> {
+    this.status.reportInfo(null, 'POST /auth/register');
+    return this.http.post<LoginInfo>(authUrl + 'register', {username, password}, this.genOptions())
+     .pipe(catchError((err : HttpErrorResponse) => {
+        switch (err.status) {
+          case (409):
+            this.status.reportError('A user with that username exists.', '409; Username Conflict');
+            break;
+          case (500):
+            this.status.reportError('An internal error has occured, try again later.', '500');
+            break;
+          default:
+            this.status.reportError('An unknown error occured', err.status.toString());
+            break;
+        }
+        return new Observable<LoginInfo>;
+      }));
   }
 }
