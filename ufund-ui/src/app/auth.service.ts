@@ -43,6 +43,20 @@ export class AuthService {
     }
   }
 
+  catchHttpError<T>(err: HttpErrorResponse): Observable<T> {
+    switch (err.status) {
+      case (403):
+        this.status.reportError('This service is not accessible without proper authentication.', '403; Forbidden');
+        break;
+      case (500):
+        this.status.reportError('An internal error has occured, try again later.', '500');
+        break;
+      default:
+        this.status.reportError('An unknown error occured', err.status.toString());
+        break;
+    }
+    return new Observable<T>;
+  }
   
   login(username:string, password:string): Observable<LoginInfo> { 
     this.status.reportInfo(null, 'POST /auth/login');
