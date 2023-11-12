@@ -154,13 +154,16 @@ public class FundingBasket {
             if(matching){
                 quantity *= 2;
             }
-            int newQuantity = inventoryNeeds.get(need.getName()).decreaseQuantity(quantity);
-            if(newQuantity <= 0){
-                inventoryNeeds.remove(need.getName());
-            }
-            else{
+            Need invNeed = inventoryNeeds.get(need.getName());
+            if(invNeed != null){
+                int newQuantity = invNeed.decreaseQuantity(quantity);
+                if(newQuantity <= 0){
+                    inventoryNeeds.remove(need.getName());
+                }
+                else{
                 Need newNeed = new Need(need.getName(), need.getCost(), newQuantity, need.getType());
                 inventoryNeeds.put(need.getName(), newNeed);
+                }   
             }
         }
         users.remove(username);

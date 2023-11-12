@@ -47,7 +47,7 @@ public class FundingBasketTests {
         Need need = new Need("testNeed", 10, 2, "quality");
         basket.addNeed(need, TEST_USERNAME);
         Need addedNeed = basket.addNeed(need, TEST_USERNAME);
-        assertNull(addedNeed); 
+        assertEquals(addedNeed.getQuantity(),2); 
     }
 
     @Test
