@@ -35,8 +35,6 @@ public class Need {
         } else {
             Need other = (Need)obj;
             return  this.name.equals(other.getName())
-                    && this.cost == other.getCost()
-                    && this.quantity == other.getQuantity()
                     && this.type.equals(other.getType());
         }
     }
@@ -52,5 +50,15 @@ public class Need {
     }
     public String getType() {
         return type;
+    }
+
+    public int decreaseQuantity(int amount){
+        this.quantity = this.quantity - amount;
+        return this.quantity;
+    }
+
+    public int increaseQuantity(int amount){
+        this.quantity = this.quantity + amount;
+        return this.quantity;
     }
 }

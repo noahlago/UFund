@@ -86,27 +86,45 @@ public class FundingBasket {
     public Need addNeed(Need need, String username) throws IOException{
         if(users.containsKey(username)){
             if(users.get(username).contains(need)){
+                for (Need need2: users.get(username)){
+                    if(need2.equals(need)){
+                        int quantity = need2.increaseQuantity(1);
+                        save();
+                        return need2;           
+                    }
+                }
                 return null;
             }
             else{
-                users.get(username).add(need);
+                Need newNeed = new Need(need.getName(), need.getCost(), 1, need.getType());
+                users.get(username).add(newNeed);
                 save();
                 return need;
             }
         }
         else{
-            users.put(username, new ArrayList<>());
-            users.get(username).add(need);
+            users.put(username, new ArrayList<>());  
+            Need newNeed = new Need(need.getName(), need.getCost(), 1, need.getType());
+            users.get(username).add(newNeed);
             save();
             return need;
         }
     }
 
+
     public Need deleteNeed(Need need, String username) throws IOException{
         if(users.get(username).contains(need)){
-            users.get(username).remove(need);
-            save();
-            return need;
+            for (Need need2: users.get(username)){
+                if(need2.equals(need)){
+                    int quantity = need2.decreaseQuantity(1);
+                    if(quantity<= 0){
+                        users.get(username).remove(need);
+                        save();
+                        return need2;
+                    }
+                }
+            }
+            return null;
         }
         else{
             return null;
@@ -119,7 +137,6 @@ public class FundingBasket {
                 if(need.getName().equals(name)){
                     return need;
                 }
-                return null;
             }
         }
         return null;
@@ -127,15 +144,14 @@ public class FundingBasket {
 
     public Collection<Need> getNeeds(String username) throws IOException{
         return this.users.get(username);
-
     }
 
     public void checkout(String username) throws IOException{
         
         for (Need need: users.get(username)){
             int quantity = need.getQuantity();
-            int newQuantity = quantity - 1;
-            if(newQuantity == 0){
+            int newQuantity = inventoryNeeds.get(need.getName()).decreaseQuantity(quantity);
+            if(newQuantity <= 0){
                 inventoryNeeds.remove(need.getName());
             }
             else{
