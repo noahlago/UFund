@@ -122,6 +122,29 @@ public class FundingBasketController {
         }
     }
 
+    @PostMapping("/match")
+    public ResponseEntity<String> switchMatching(@RequestHeader String username, @RequestHeader String token){
+        LOG.info("POST /basket/match");
+        if(AuthUtils.isAdmin(username) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if(AuthUtils.isLoggedIn(token) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-    
+        fundingBasket.switchMatching();
+        return new ResponseEntity<String>(HttpStatus.OK);
+    }
+
+    @GetMapping("/match")
+    public ResponseEntity<Boolean> getMatching(@RequestHeader String username, @RequestHeader String token){
+        LOG.info("POST /basket/match");
+        if(AuthUtils.isLoggedIn(token) == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        boolean matching = fundingBasket.getMatching();
+
+        return new ResponseEntity<Boolean>(matching, HttpStatus.OK);
+    }
 }

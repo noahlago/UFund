@@ -21,6 +21,7 @@ public class FundingBasket {
     private String filename;
     private String inventoryFile;
     private ObjectMapper objectMapper;
+    private boolean matching;
 
     public FundingBasket(@Value("${basket.file}") String filename, @Value("${needs.file}") String filename2, ObjectMapper objectMapper){
         this.filename = filename;
@@ -28,7 +29,7 @@ public class FundingBasket {
         this.objectMapper = objectMapper;
         this.users = new HashMap<>();
         this.inventoryNeeds = new HashMap<>();
-
+        this.matching = false;
 
         try{
             load();
@@ -150,6 +151,9 @@ public class FundingBasket {
         
         for (Need need: users.get(username)){
             int quantity = need.getQuantity();
+            if(matching){
+                quantity *= 2;
+            }
             int newQuantity = inventoryNeeds.get(need.getName()).decreaseQuantity(quantity);
             if(newQuantity <= 0){
                 inventoryNeeds.remove(need.getName());
@@ -163,6 +167,12 @@ public class FundingBasket {
         save();
     }
 
+    public void switchMatching(){
+        this.matching = !(matching);
+    }
 
+    public boolean getMatching(){
+        return this.matching;
+    }
 
 }
