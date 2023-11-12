@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Need } from './need';
-import { StatusService } from './status.service';
 
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -15,47 +14,20 @@ export class CupboardService {
   private cupboardUrl = 'http://localhost:8080/inventory';
   
   constructor(private http: HttpClient, 
-              private auth: AuthService,
-              private status: StatusService) {}
+              private auth: AuthService) {}
 
   options: () => {headers: HttpHeaders} = this.auth.genOptions;
 
   getNeeds(): Observable<Need[]> {
     console.log('GET needs')
     return this.http.get<Need[]>(this.cupboardUrl, this.options())
-     .pipe(catchError((err : HttpErrorResponse) => {
-        switch (err.status) {
-          case (403):
-            this.status.reportError('This service is not accessible without proper authentication.', '403; Forbidden');
-            break;
-          case (500):
-            this.status.reportError('An internal error has occured, try again later.', '500');
-            break;
-          default:
-            this.status.reportError('An unknown error occured', err.status.toString());
-            break;
-        }
-        return new Observable<Need[]>;
-      }));
+     .pipe(catchError((err : HttpErrorResponse) => this.auth.catchHttpError<Need[]>(err)));
   }
 
   createNeed(need: Need): Observable<Need> {
     console.log('POST ' + need.name);
     return this.http.post<Need>(this.cupboardUrl, need, this.options())
-     .pipe(catchError((err : HttpErrorResponse) => {
-        switch (err.status) {
-          case (403):
-            this.status.reportError('This service is not accessible without proper authentication.', '403; Forbidden');
-            break;
-          case (500):
-            this.status.reportError('An internal error has occured, try again later.', '500');
-            break;
-          default:
-            this.status.reportError('An unknown error occured', err.status.toString());
-            break;
-        }
-        return new Observable<Need>;
-      }));
+     .pipe(catchError((err : HttpErrorResponse) => this.auth.catchHttpError<Need>(err)));
   }
 
   deleteNeed(name:string): Observable<Need> {

@@ -14,8 +14,7 @@ export class FundingBasketService {
   private basketUrl = 'http://localhost:8080/basket';
   
   constructor(private http: HttpClient, 
-              private auth: AuthService,
-              private status: StatusService) {}
+              private auth: AuthService) {}
 
   options: () => {headers: HttpHeaders} = this.auth.genOptions;
   
