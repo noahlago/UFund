@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Answers.CALLS_REAL_METHODS;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -183,6 +184,39 @@ public class FundingBasketControllerTests {
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         verify(fundingBasket, never()).checkout("");
-    }    
+    } 
+    
+    @Test 
+    public void testGetMatchingValid() throws IOException{
+        ResponseEntity<Boolean> responseEntity = fundingBasketController.getMatching(validUsername, validToken);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Test 
+    public void testGetMatchingInvalidToken() throws IOException{
+        ResponseEntity<Boolean> responseEntity = fundingBasketController.getMatching(validUsername, "");
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test 
+    public void testSwitchMatchingValid() throws IOException{
+        ResponseEntity<String> responseEntity = fundingBasketController.switchMatching("admin", validToken);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Test 
+    public void testSwitchMatchingInvalidUser() throws IOException{
+        ResponseEntity<String> responseEntity = fundingBasketController.switchMatching("user", validToken);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    
+    @Test 
+    public void testSwitchMatchingInvalidToken() throws IOException{
+        ResponseEntity<String> responseEntity = fundingBasketController.switchMatching("admin", "");
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+
 
 }
