@@ -64,3 +64,8 @@
   font-size: small;
   align-self: center;
 }
+
+.checkout {
+  display: flex;
+  flex-direction: column;
+}

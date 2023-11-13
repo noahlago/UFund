@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FundingBasketService } from '../funding-basket.service';
 import { Need } from '../need';
-import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-funding-basket',
@@ -10,16 +9,13 @@ import { FormBuilder } from '@angular/forms';
 })
 export class FundingBasketComponent implements OnInit {
 
-  constructor(private basketService: FundingBasketService,
-              private formBuilder: FormBuilder) {}
+  constructor(private basketService: FundingBasketService) {}
 
   basket: Need[] = [];
+  total: number = 0;
   selectedNeed?: Need;
+  matching: string | null = null;
   
-  checkoutForm = this.formBuilder.group({
-    // Address info? Payment info?
-  })
-
   ngOnInit(): void {
     this.getNeeds();
   }
@@ -27,8 +23,24 @@ export class FundingBasketComponent implements OnInit {
   getNeeds(): void {
     this.basketService.getNeeds()
       .subscribe(needs => {
-        this.basket = needs  
+        this.basket = needs 
+        this.setTotal()
+        this.getMatch()
       })
+  }
+
+  getMatch(): void {
+    this.basketService.getMatch().subscribe((match: boolean) => {
+      this.matching = (match ? "We will match all purchases made." : null);
+    })
+  }
+
+  setTotal(): void {
+    this.total = 0
+    for (let i = 0; i < this.basket.length; i++) {
+      let need = this.basket[i];
+      this.total += need.cost * need.quantity;
+    }
   }
 
   deleteNeed(): void {
