@@ -48,7 +48,17 @@ public class LoginTests {
         assertTrue(result);
         assertFalse(login.isLoggedIn(testInfo.getUsername()));
     }
+
     private void createTestJsonFile(String filename, LoginInfo[] data) throws IOException {
         objectMapper.writeValue(new File(filename), data);
+    }
+
+    @Test
+    void testLogoutFail() throws IOException {
+        LoginInfo testInfo = new LoginInfo("testUser", "password");
+        createTestJsonFile(testFilename, new LoginInfo[]{testInfo});
+        boolean result = login.logout(testInfo.getUsername());
+        assertFalse(result);
+        //assertFalse(login.isLoggedIn(testInfo.getUsername()));
     }
 }

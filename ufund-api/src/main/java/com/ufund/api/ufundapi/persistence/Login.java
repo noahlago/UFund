@@ -60,13 +60,13 @@ public class Login {
      * @return the key associated with the given name, if the user is logged in
      * @throws IOException
      */
-    public String getKey(String username) throws IOException{
-        if(filename == null){
-            return null;
-        }else{
-            return loggedIn.get(username);
-        }
-    }
+    // public String getKey(String username) throws IOException{
+    //     if(filename == null){
+    //         return null;
+    //     }else{
+    //         return loggedIn.get(username);
+    //     }
+    // }
 
     /**
      * Attempts to log in using the credentials provided by the LoginInfo instance
@@ -155,9 +155,9 @@ public class Login {
      * @param token
      * @return true if the given username and token are a value set in the LoggedIn HashMap, false otherwise
      */
-    public boolean authenticate(String username, String token){
-        return loggedIn.get(username).equals(token);
-    }
+    // public boolean authenticate(String username, String token){
+    //     return loggedIn.get(username).equals(token);
+    // }
 
     /**
      * @param name

@@ -3,6 +3,7 @@ package com.ufund.api.ufundapi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.model.Need;
 import com.ufund.api.ufundapi.persistence.FundingBasket;
+import com.ufund.api.ufundapi.persistence.InventoryFileDAO;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class FundingBasketTests {
+    private InventoryFileDAO fileDAO;
     private ObjectMapper mapper = new ObjectMapper();
     private FundingBasket basket;
     private static final String TEST_FILENAME = "testbasket.json";
@@ -23,12 +25,16 @@ public class FundingBasketTests {
     private static final String TEST_USERNAME = "testUser";
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException{
         File file = new File(TEST_FILENAME);
         if (file.exists() && file.isFile()) {
             file.delete();
         }
 
+        
+        fileDAO = new InventoryFileDAO(TEST_FILENAME2, mapper);
+        Need newNeed = new Need("name", 10000, 100000, "type-2"); 
+        fileDAO.newNeed(newNeed);
         basket = new FundingBasket(TEST_FILENAME,TEST_FILENAME2, mapper);
     }
 
@@ -119,5 +125,13 @@ public class FundingBasketTests {
         basket.addNeed(need1, TEST_USERNAME);
         basket.checkout(TEST_USERNAME);
         assertEquals(basket.getNeeds(TEST_USERNAME), null);
+    }
+
+    @Test
+    void testCheckoutWithFile() throws IOException{
+        Need newNeed = new Need("name", 10000, 1, "type-2"); 
+        basket.addNeed(newNeed, "billy");
+        basket.checkout("billy");
+        assertEquals(null, basket.getNeeds("billy")); 
     }
 }
