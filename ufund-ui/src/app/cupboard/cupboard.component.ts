@@ -4,6 +4,7 @@ import { Need } from '../need';
 import { FundingBasketService } from '../funding-basket.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { adminCheck } from '../auth.service';
+import { StatusService } from '../status.service';
 
 
 @Component({
@@ -14,12 +15,14 @@ import { adminCheck } from '../auth.service';
 export class CupboardComponent implements OnInit {
   constructor(private cupboardService: CupboardService,
               private fundingBasketService: FundingBasketService,
-              private formBuilder: FormBuilder) {}
+              private formBuilder: FormBuilder,
+              private statusService: StatusService) {}
 
 
   cupboard: Need[] = []; 
   selectedNeed?: Need;
   admin = adminCheck;
+  donationMatching?: boolean;
 
   createForm = this.formBuilder.group({
     name: ['', Validators.required],
@@ -30,6 +33,9 @@ export class CupboardComponent implements OnInit {
   
   ngOnInit(): void {
     this.getNeeds();
+    if (this.admin()) {
+      this.getMatch();
+    }
   }
 
   searchNeeds(term: string): void {
@@ -52,6 +58,11 @@ export class CupboardComponent implements OnInit {
         });
   }
 
+  getMatch(): void {
+    this.fundingBasketService.getMatch()
+        .subscribe((match: boolean) => this.donationMatching = match);
+  }
+
   onSelect(need: Need): void {
     this.selectedNeed = need;
   }
@@ -59,7 +70,7 @@ export class CupboardComponent implements OnInit {
   onDelete(need: Need): void {
     this.cupboardService.deleteNeed(need.name)
       .subscribe(info => {
-        console.log(info)
+        this.statusService.reportGood(need.name + ' successfully deleted.', '200;\n' + info);
         this.getNeeds()
       });
   }
@@ -67,10 +78,9 @@ export class CupboardComponent implements OnInit {
   onUpdate(need: Need): void {
     this.cupboardService.updateNeed(need)
       .subscribe(info => {
-        console.log(info);
+        this.statusService.reportGood(need.name + ' successfully rewritten.', '200;\n' + info);
         this.getNeeds();
       });
-    this.getNeeds()
   }
 
   onCreate() {
@@ -82,13 +92,20 @@ export class CupboardComponent implements OnInit {
     }
     this.cupboardService.createNeed(need)
       .subscribe(info => { 
-        console.log(info);
+        this.statusService.reportGood(need.name + ' successfully created.', '201;\n' + info);
         this.getNeeds();
       });
   }
 
   addToBasket(): void {
     this.fundingBasketService.createNeed(this.selectedNeed!).subscribe();
+  }
+
+  matchToggle(): void {
+    this.fundingBasketService.matchToggle().subscribe(() => {
+      this.statusService.reportGood('Toggled donation matching.', '200; OK')
+      this.getMatch();
+    });
   }
 
 }

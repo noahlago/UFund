@@ -33,8 +33,7 @@
     </form>
     <div class="edit-box" *ngIf="selectedNeed">
       <h3>Edit Need</h3>
-      <label>Name</label>
-      <input type="text" [(ngModel)]="selectedNeed.name" placeholder="name">
+      <label>Name: {{selectedNeed.name}}</label>
       <label>Cost</label>
       <input type="number" [(ngModel)]="selectedNeed.cost" placeholder=0>
       <label>Quantity</label>
@@ -45,6 +44,11 @@
         <button type="submit" (click)="onUpdate(selectedNeed)">Update</button>
         <button type="submit" (click)="onDelete(selectedNeed)">Delete</button>
       </div>
+    </div>
+    <div class="match-box">
+      <h3>Donation Matching:</h3>
+      <h3 [class.on]="">{{donationMatching}}</h3>
+      <button (click)="matchToggle()">Toggle</button>
     </div>
   </div>
 </div>

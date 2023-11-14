@@ -5,7 +5,6 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs';
 import { AuthService } from './auth.service';
-import { StatusService } from './status.service';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +36,17 @@ export class FundingBasketService {
   }
 
   checkout(): Observable<undefined> {
-    return this.http.post<undefined>(this.basketUrl + '/checkout', {} ,this.options())
+    return this.http.post<undefined>(this.basketUrl + '/checkout', {} , this.options())
+      .pipe(catchError((err : HttpErrorResponse) => this.auth.catchHttpError<undefined>(err)));
+  }
+
+  getMatch(): Observable<boolean> {
+    return this.http.get<boolean>(this.basketUrl + '/match', this.options())
+      .pipe(catchError((err : HttpErrorResponse) => this.auth.catchHttpError<boolean>(err)));
+  }
+  
+  matchToggle(): Observable<undefined> {
+    return this.http.post<undefined>(this.basketUrl + '/match', {}, this.options())
       .pipe(catchError((err : HttpErrorResponse) => this.auth.catchHttpError<undefined>(err)));
   }
   

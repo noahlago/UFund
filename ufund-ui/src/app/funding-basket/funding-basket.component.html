@@ -16,5 +16,10 @@
     </li>
   </ul>
 
-  <button (click)="onSubmit()">Checkout</button>
+  <div class="checkout">
+    <label>Total Cost: ${{total}}</label>
+    <label>{{matching}}</label>
+    <button (click)="onSubmit()">Checkout</button>
+  </div>
+
 </div>
