@@ -92,6 +92,10 @@ public class Login {
             users.put(user.getUsername(), user.getPassword());
         }
 
+        if (!users.containsKey(info.getUsername())) {
+          return "";      
+        }
+
         Integer expected = users.get(info.getUsername());
         String password = "" + info.getPassword();
         Integer actual = password.hashCode();
