@@ -18,7 +18,7 @@ geometry: margin=1in
 
 ## Executive Summary
 
-* The goal of this project is to create an online U-Fund Manager where a company's Needs are stored and users can fund those needs. 
+* The goal of this project is to create an online U-Fund Manager where a company's Needs are stored and users can fund those needs. the UI will represent a Food Bank using the UFund manager.
 
 ### Purpose
 >  _**[Sprint 2 & 4]** Provide a very brief statement about the project and the most
@@ -178,12 +178,16 @@ This section describes the web interface flow; this is how the user views and in
 > _This section will provide information about the testing performed
 > and the results of the testing._
 
+* 116 tests were run, all tests passed. 
+
 ### Acceptance Testing
 > _**[Sprint 2 & 4]** Report on the number of user stories that have passed all their
 > acceptance criteria tests, the number that have some acceptance
 > criteria tests failing, and the number of user stories that
 > have not had any testing yet. Highlight the issues found during
 > acceptance testing and if there are any concerns._
+
+* All users stories passed their acceptance criteria 
 
 ### Unit Testing and Code Coverage
 > _**[Sprint 4]** Discuss your unit testing strategy. Report on the code coverage

@@ -89,7 +89,7 @@ public class FundingBasket {
             if(users.get(username).contains(need)){
                 for (Need need2: users.get(username)){
                     if(need2.equals(need)){
-                        int quantity = need2.increaseQuantity(1);
+                        need2.increaseQuantity(1);
                         save();
                         return need2;           
                     }
