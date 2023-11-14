@@ -1,18 +1,24 @@
 p {
-    text-align: center;
-    border-radius: 15px;
-    padding: 10px;
-    margin: 0 auto;
-    width: fit-content;
-  }
-  .good {
-    background-color: #4CAF50; 
-  }
-  
-  .info {
-    background-color: #2196F3; 
-  }
-  
-  .error {
-    background-color: #F44336; 
-  }
+  text-align: center;
+  border-radius: 15px;
+  padding: 10px;
+  margin: 0 auto;
+  margin-top: 5px;
+  width: fit-content;
+}
+
+p:hover {
+  cursor: pointer;
+}
+
+.good {
+  background-color: #4CAF50;
+}
+
+.info {
+  background-color: #2196F3;
+}
+
+.error {
+  background-color: #F44336;
+}

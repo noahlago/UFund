@@ -72,6 +72,7 @@
   align-self: center;
 }
 
+.match-box,
 .create-box,
 .edit-box {
   margin: 3px;
