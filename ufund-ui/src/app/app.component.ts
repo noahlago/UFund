@@ -26,4 +26,8 @@ export class AppComponent {
   checkRoot(): boolean {
     return location.pathname === '/'
   }
+
+  clearStatus(): void {
+    this.statusService.clear();
+  }
 }

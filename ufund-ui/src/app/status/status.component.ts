@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StatusType } from '../status.type';
 import { StatusService } from '../status.service';
 
@@ -7,7 +7,7 @@ import { StatusService } from '../status.service';
   templateUrl: './status.component.html',
   styleUrls: ['./status.component.css']
 })
-export class StatusComponent implements OnChanges, OnInit {
+export class StatusComponent implements OnInit {
 
   constructor(private statusService: StatusService) {}
   
@@ -17,11 +17,6 @@ export class StatusComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     this.statusService.message.subscribe(value => this.message = value);
     this.statusService.status.subscribe(value => this.type = value);
-    
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.clear();
   }
   
   clear(): void {
