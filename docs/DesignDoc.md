@@ -56,6 +56,14 @@ This section describes the features of the application.
 ### Enhancements
 > _**[Sprint 4]** Describe what enhancements you have implemented for the project._
 
+* Enhancement 1: Full Login implementation
+
+* Enhancement 2: User Registration 
+
+* Enhancement 3: Donation Matching Feature
+
+* Enhancement 4: Error and Success Messages
+
 
 ## Application Domain
 
@@ -97,6 +105,8 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 This section describes the web interface flow; this is how the user views and interacts with the web application.
 
 > _Provide a summary of the application's user interface.  Describe, from the user's perspective, the flow of the pages in the web application._
+
+* In our UI a user must first navigate to the log in page ad enter their log in information. After logging in an admin will be able to view and edit the inventory of needs in the inventory page. After logging in a user can view needs and add needs to their checkout from the invenetory page and checkout from their basket page.
 
 
 ### View Tier
@@ -150,6 +160,10 @@ This section describes the web interface flow; this is how the user views and in
 
 * Each of our classes is only responsible for a specific task. For example our LoginContoller is only responsible for managing Login related requests while our FundingBasketController is only responsible for Funding Basket tasks instead of combining these two responsibilities into one giant Controller class.   
 
+## Principle 3: Information Expert
+
+* Classes in our system handle the tasks only for which they posses the required information. This is most apparent in our three controller classes. For example the Login controller handles all login requests because it is the only controller that has access to a Login object and therefore is the only controller with the information required to perform login operations
+
 
 
 ## Static Code Analysis/Future Design Improvements
@@ -180,4 +194,4 @@ This section describes the web interface flow; this is how the user views and in
 >_**[Sprint 2 & 4]** **Include images of your code coverage report.** If there are any anomalies, discuss
 > those._
 
-![Code Coverage](coverage.png)
+![Code Coverage](CodeCoverageSprint3.png)

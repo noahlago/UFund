@@ -4,7 +4,7 @@
     <a class="no_hover" *ngIf="login()">Logged in as: {{username()}}</a>
     <a routerLink="/" (click)="logout()" *ngIf="login()">Logout</a>
   </div>
-  <h2 routerLink="/">UFund</h2>
+  <h2 routerLink="/">Rochester Food Bank</h2>
   <div class="right-nav">
     <a routerLink="/cupboard" *ngIf="login()">Cupboard</a>
     <a routerLink="/basket" *ngIf="!admin() && login()">Funding Basket</a>
@@ -12,6 +12,8 @@
 </nav>
 <app-status></app-status>
 <router-outlet class="contents"></router-outlet>
-<div *ngIf="checkRoot()">
-  Welcome To UFund!
+<div *ngIf="checkRoot()" class="welcomebox">
+<br>Welcome to the Rochester Food Bank's website! 
+<br><br>Here you can view our full inventory of needed, as well as donate food items to support our continued operations. 
+<br><br> Any and all donations are appreciated! 
 </div>

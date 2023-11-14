@@ -1,1 +1,1 @@
-[{"name":"Knife","cost":3,"quantity":9,"type":"Utensil"},{"name":"Spoon","cost":1,"quantity":9,"type":"Utensil"}]
+[{"name":"Apple","cost":2,"quantity":7,"type":"Fruit"},{"name":"Pear","cost":100,"quantity":56,"type":"Fruit"},{"name":"Green Beans","cost":5,"quantity":20,"type":"Vegetable"},{"name":"Corn","cost":3,"quantity":11,"type":"Vegetable"},{"name":"Yogurt","cost":4,"quantity":4,"type":"Dairy"},{"name":"Beef","cost":13,"quantity":9,"type":"Protein"},{"name":"Milk","cost":7,"quantity":13,"type":"Dairy"}]
