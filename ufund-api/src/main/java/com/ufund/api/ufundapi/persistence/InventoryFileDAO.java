@@ -165,10 +165,12 @@ public class InventoryFileDAO implements InventoryDAO{
      * Gets Collection of Needs that contain search value
      */
     public Collection<Need> searchNeed(String search) throws IOException {
+        String searchCopy = search.toLowerCase();
         LinkedList<Need> needsList = new LinkedList<>();
         Set<String> keys = this.needs.keySet();
         for (String key: keys) {
-            if (key.contains(search)){
+            String keyCopy = key.toLowerCase();
+            if (keyCopy.contains(searchCopy)){
                 needsList.add(needs.get(key));
             }
         }
