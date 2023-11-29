@@ -21,9 +21,7 @@ geometry: margin=1in
 * The goal of this project is to create an online U-Fund Manager where a company's Needs are stored and users can fund those needs. the UI will represent a Food Bank using the UFund manager.
 
 ### Purpose
->  _**[Sprint 2 & 4]** Provide a very brief statement about the project and the most
-> important user group and user goals._
-
+> User Goals
 * Helper: the goal of a helper is to add needs from the cupboard to their funding basket and then proceed to checkout
 * Manager: the goal of the manager is to maintain the cupboard, including removing, adding, and editing needs.
 
@@ -45,25 +43,35 @@ This section describes the features of the application.
 > maybe Epics and critical Stories._
 
 ### Definition of MVP
-> _**[Sprint 2 & 4]** Provide a simple description of the Minimum Viable Product._
-
-
+> MVP
 * The MVP of this project is a UI that can allow both Helpers and Managers complete their tasks
+* It encapsulates need management, helper functionality, data persistence, abd minimal authentication.
 
 ### MVP Features
->  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
+> Add/Remove items in the Funding Basket
+* As a Helper I want to add to my Funding Basket so that I can track how much I want to donate to the organizations.
+* As a Helper I want to remove items from my funding basket so that I can update it as needed.
+> Create/Search/Update Needs in the funding basket
+* AS a Developer I WANT to submit a request to create a new need (name [unique], cost, quantity, type) SO THAT it is added to the cupboard.
+* AS a Developer I WANT to submit a request to get the the needs in the cupboard whose name contains the given text, SO THAT I have access to only that subset of needs.
+* AS a Developer I WANT to submit a request to get the entire cupboard SO THAT I have access to all of the needs for the organization.
+> Create/Add to checkout
+* As a Helper I want to check out from the funding basic so that organizations get my money.
+* As a Helper I want to add needs to the funding basket so that I can check them out.
 
 ### Enhancements
-> _**[Sprint 4]** Describe what enhancements you have implemented for the project._
-
-* Enhancement 1: Full Login implementation
-
-* Enhancement 2: User Registration 
-
-* Enhancement 3: Donation Matching Feature
-
-* Enhancement 4: Error and Success Messages
-
+> Enhancement 1: Full Login implementation
+* Authenticates existing users
+* Enables admin privileges with the correct credentials
+> Enhancement 2: User Registration 
+* A new user may register with a unique username and a personal password
+* They will then benefit from the authentication present in the login implementation
+> Enhancement 3: Donation Matching Feature
+* When enabled by admin, each donation made by a user will be doubled in the system at no additional cost
+* If the stock runs out without matching being complete, matching will end prematurely
+> Enhancement 4: Error and Success Messages
+* Visual feedback on requests such as login and incorrect actions within the program
+* For example, green success bubble when successfully logged in, and a red error bubble when you are denied login
 
 ## Application Domain
 
@@ -71,10 +79,7 @@ This section describes the application domain.
 
 ![Domain Model](UfundDomainModel.png)
 
-> _**[Sprint 2 & 4]** Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
-
+> Application Domain
 * The Need and LoginInfo classes are used to send information to their respective FileDaos
 * Those FileDaos (FundingBasket, Inventory, and Login), then use that information to modify json objects and write to a file
 * The three controller classes convert HTTP requests into formats that the FileDaos can understand
@@ -104,8 +109,7 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 
 This section describes the web interface flow; this is how the user views and interacts with the web application.
 
-> _Provide a summary of the application's user interface.  Describe, from the user's perspective, the flow of the pages in the web application._
-
+> User Interface
 * In our UI a user must first navigate to the log in page and enter their log in information. After logging in an admin will be able to view and edit the inventory of needs in the inventory page. After logging in a user can view needs and add needs to their checkout from the inventory page and checkout from their basket page.
 
 
@@ -192,10 +196,8 @@ The UI
 
 All the acceptance tests were fulfilled. However some acceptance tests were discovered to not be fully representative of our vision of what we expected of our components, in which we had to adjust them to better fit our expectations.
 ### Unit Testing and Code Coverage
-> _**[Sprint 4]** Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets._
+> Unit Testing Strategy
+* Our unit tests were made to effectively cover everything in the program that could potentially be tested. These tests were run both to check for success and for failures, as knowing where the project fails is pivitol to the success of the project as a whole. Through these tests, we were able to isolate significant issues in our code logic and fix them immediately.
 
 >_**[Sprint 2 & 4]** **Include images of your code coverage report.** If there are any anomalies, discuss
 > those._
