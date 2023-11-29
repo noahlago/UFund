@@ -106,7 +106,7 @@ This section describes the web interface flow; this is how the user views and in
 
 > _Provide a summary of the application's user interface.  Describe, from the user's perspective, the flow of the pages in the web application._
 
-* In our UI a user must first navigate to the log in page ad enter their log in information. After logging in an admin will be able to view and edit the inventory of needs in the inventory page. After logging in a user can view needs and add needs to their checkout from the invenetory page and checkout from their basket page.
+* In our UI a user must first navigate to the log in page and enter their log in information. After logging in an admin will be able to view and edit the inventory of needs in the inventory page. After logging in a user can view needs and add needs to their checkout from the inventory page and checkout from their basket page.
 
 
 ### View Tier
@@ -154,12 +154,15 @@ This section describes the web interface flow; this is how the user views and in
 
 ## Principle 1: Controller
 
-* Our project features three controllers that are all used to link the our Sping API and out Angualar UI. Each controller is capable of processing requests from the Angualr UI and calling the correct function in the api tier.
+Our project features three controllers that are all used to link the our Sping API and out Angular UI. Each controller is capable of processing requests from the Angular UI and calling the correct function in the API tier.
+
+* `FundingBasket`: This was to handle the persistence and checkout pages of all the
 
 ## Principle 2: Single Responsibility
 
-* Each of our classes is only responsible for a specific task. For example our LoginContoller is only responsible for managing Login related requests while our FundingBasketController is only responsible for Funding Basket tasks instead of combining these two responsibilities into one giant Controller class.   
+Each of our classes is only responsible for a specific task. For example our `LoginContoller` is only responsible for managing Login related requests while our `FundingBasketController` is only responsible for Funding Basket tasks instead of combining these two responsibilities into one giant Controller class.  
 
+The UI 
 ## Principle 3: Information Expert
 
 * Classes in our system handle the tasks only for which they posses the required information. This is most apparent in our three controller classes. For example the Login controller handles all login requests because it is the only controller that has access to a Login object and therefore is the only controller with the information required to perform login operations
@@ -178,7 +181,7 @@ This section describes the web interface flow; this is how the user views and in
 > _This section will provide information about the testing performed
 > and the results of the testing._
 
-* 116 tests were run, all tests passed. 
+95 tests were run, all tests passed. There was a major focus on fundamental functions to the classes
 
 ### Acceptance Testing
 > _**[Sprint 2 & 4]** Report on the number of user stories that have passed all their
@@ -187,8 +190,7 @@ This section describes the web interface flow; this is how the user views and in
 > have not had any testing yet. Highlight the issues found during
 > acceptance testing and if there are any concerns._
 
-* All users stories passed their acceptance criteria 
-
+All the acceptance tests were fulfilled. However some acceptance tests were discovered to not be fully representative of our vision of what we expected of our components, in which we had to adjust them to better fit our expectations.
 ### Unit Testing and Code Coverage
 > _**[Sprint 4]** Discuss your unit testing strategy. Report on the code coverage
 > achieved from unit testing of the code base. Discuss the team's
@@ -197,5 +199,7 @@ This section describes the web interface flow; this is how the user views and in
 
 >_**[Sprint 2 & 4]** **Include images of your code coverage report.** If there are any anomalies, discuss
 > those._
+
+A major anomaly in the branch coverage was the `FundingBasket` in the persistence section of the API. This was due to the fact that the end of sprint 3 did not send
 
 ![Code Coverage](CodeCoverageSprint3.png)
