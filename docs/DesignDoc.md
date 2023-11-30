@@ -125,6 +125,9 @@ This section describes the web interface flow; this is how the user views and in
 > As these can span multiple tiers, be sure to include an relevant HTTP requests from the client-side to the server-side 
 > to help illustrate the end-to-end flow._
 
+![Sequence Diagram of a User Adding a Need to Their Funding Basket](AddToBasketSequence.jpg)
+![Sequence Diagram of an Admin Adding a Need to Their Cupboard](AddtoCupboardSequence.jpg)
+
 > _**[Sprint 4]** To adequately show your system, you will need to present the **class diagrams** where relevant in your design. Some additional tips:_
  >* _Class diagrams only apply to the **ViewModel** and **Model** Tier_
 >* _A single class diagram of the entire system will not be effective. You may start with one, but will be need to break it down into smaller sections to account for requirements of each of the Tier static models below._
